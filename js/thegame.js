@@ -197,46 +197,49 @@ theGame.prototype = {
                 //  Let gravity do its thing
                 
 
-
+                var star;
                 if (cursors.down.isDown && cursors.left.isDown) {
-                    var star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y + 40, 'bullet');
+                    star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y + 40, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (cursors.down.isDown && cursors.right.isDown) {
-                    var star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 40, 'bullet');
+                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 40, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("SHOOT DOWN RIGHT")
                 }
                 else if (cursors.up.isDown && cursors.left.isDown) {
-                    var star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y, 'bullet');
+                    star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (cursors.up.isDown && cursors.right.isDown) {
-                    var star = stars.create(this.player.body.x + (80 * direction), this.player.body.y, 'bullet');
+                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("SHOOT UP RIGHT")
                 }
 
                 else if (cursors.down.isDown) {
-                    var star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y + 60, 'bullet');
+                    star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y + 60, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("shoot DOWN");
                 }
                 else if (cursors.up.isDown) {
-                    var star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y - 20, 'bullet');
+                    star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y - 20, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("shoot UP");
                 }
                 else if (cursors.left.isDown) {
-                    var star = stars.create(this.player.body.x + (20 * direction), this.player.body.y + 15, 'stabulletr');
+                    star = stars.create(this.player.body.x + (20 * direction), this.player.body.y + 15, 'stabulletr');
                     console.log("shoot LEFT");
                 }
                 else if (cursors.right.isDown) {
-                    var star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 15, 'bullet');
+                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 15, 'bullet');
                     console.log("shoot RIGHT");
                 }
+
+                star.animations.add('wobble', [0,2,4], 10, true);
+                star.animations.play("wobble");
 
                 if (direction != 0) {
                     star.body.velocity.x = 300 * direction;
