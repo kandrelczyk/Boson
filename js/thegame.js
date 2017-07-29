@@ -21,17 +21,24 @@ theGame.prototype = {
         platforms.enableBody = true;
 
         //  Now let's create two ledges
-        var ledge = platforms.create(400, 300, 'ground');
+        /*
+        var ledge = platforms.create(450, 300, 'ground');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        */
 
-        ledge = platforms.create(-150, 150, 'ground');
+        var ledge = platforms.create(-150, 150, 'ground');
         ledge.body.immovable = true;
         ledge.charge = 1;
 
         ledge = platforms.create(50, 500, 'ground');
         ledge.body.immovable = true;
         ledge.charge = 1;
+
+        ledge = platforms.create(400, 0, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.1,10);
 
         // The player and its settings
         player = this.game.add.sprite(350, this.game.world.height - 150, 'dude');
@@ -201,6 +208,9 @@ theGame.prototype = {
         var platformH = platform.body.height;
         var platformX = platform.body.x;
         var platformY = platform.body.y;
+
+        console.log("width: " + platformW + " height: " + platformH);
+        
 
         var playerX = player.body.x;
         var playerY = player.body.y;
