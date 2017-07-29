@@ -152,7 +152,7 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(100, 100, 'atom2');
+        this.player2 = this.game.add.sprite(700, 500, 'atom2');
 
 
         this.player2.charge = 1;
@@ -188,7 +188,7 @@ theGame.prototype = {
         this.score1Text = this.game.add.text(20, 10, this.score1, {fontSize: '32px', fill: '#fff'});
         this.score2Text = this.game.add.text(980, 10, this.score2, {fontSize: '32px', fill: '#fff'});
 
-        this.player.life = 3;
+        this.player2.life = 3;
         this.player.life = 3;
 
     },
@@ -419,7 +419,8 @@ theGame.prototype = {
         }
 
         player.life--;
-        if (player.life == 0) {
+        console.log("life: " + player.life);
+        if (player.life <= 0) {
             if (player.name == "Player 1") {
                 this.score(this.player);
             } else {
@@ -589,7 +590,7 @@ theGame.prototype = {
         this.player.animations.play('idle_b');
 
         this.player.life = 3;
-        this.player.life = 3;
+        this.player2.life = 3;
 
         this.player2.x = 150;
         this.player2.y = 80;
