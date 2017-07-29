@@ -88,7 +88,7 @@ theGame.prototype = {
         ledge.scale.setTo(0.05, 2);
 
         // The player and its settings
-        player = this.game.add.sprite(70, 70, 'atom');
+        player = this.game.add.sprite(500, 500, 'atom');
 
         player.charge = -1;
         player.checkWorldBounds = true;
