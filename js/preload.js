@@ -14,6 +14,10 @@ preload.prototype = {
 
         this.game.load.audio('menu', 'assets/audio/menu.mp3');
         this.game.load.audio('game', 'assets/audio/game.mp3');
+        this.game.load.audio('death', 'assets/audio/death.mp3');
+        this.game.load.audio('shoot', 'assets/audio/shoot.mp3');
+        this.game.load.audio('platform_hit', 'assets/audio/platform_hit.mp3');
+        this.game.load.audio('atom_hit', 'assets/audio/atom_hit.mp3');
         this.game.load.image('verticalground', 'assets/verticalplatform.png');
 
 

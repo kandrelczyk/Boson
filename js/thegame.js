@@ -7,6 +7,7 @@ var theGame = function(game) {
     this.score1 = 0;
     this.score2 = 0;
 
+    this.scored = false;
 
 }
 
@@ -25,55 +26,65 @@ theGame.prototype = {
 
         var ledge = platforms.create(170, 10, 'platform2');
         ledge.body.immovable = true;
-        ledge.charge = 1;
+        ledge.charge = -1;
+        ledge.frame = 0;
         ledge.scale.setTo(0.3, 0.5);
 
         ledge = platforms.create(800, 10, 'platform2');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.3, 0.5);
 
-        ledge = platforms.create(480, 20, 'platform1');
+        ledge = platforms.create(480, -20, 'platform1');
         ledge.body.immovable = true;
-        ledge.charge = 1;
+        ledge.charge = -1;
+        ledge.frame = 0;
         ledge.scale.setTo(0.5, 0.5);
 
-        
+
         ledge = platforms.create(480, 480, 'platform1');
         ledge.body.immovable = true;
-        ledge.charge = 1;
+        ledge.charge = -1;
+        ledge.frame = 0;
         ledge.scale.setTo(0.5, 0.5);
 
         //abajo horiz
         ledge = platforms.create(100, 580, 'platform3');
         ledge.body.immovable = true;
-        ledge.charge = 1;
+        ledge.charge = -1;
+        ledge.frame = 0;
         ledge.scale.setTo(0.3, 0.5);
 
         //abajo horiz
         ledge = platforms.create(800, 580, 'platform3');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.3, 0.5);
 
         ledge = platforms.create(20, 430, 'platform1');
         ledge.body.immovable = true;
-        ledge.charge = 1;
+        ledge.charge = -1;
+        ledge.frame = 0;
         ledge.scale.setTo(0.5, 0.5);
 
         ledge = platforms.create(20, 80, 'platform1');
         ledge.body.immovable = true;
-        ledge.charge = 1;
+        ledge.charge = -1;
+        ledge.frame = 0;
         ledge.scale.setTo(0.5, 0.5);
 
         ledge = platforms.create(980, 430, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.5, 0.5);
 
         ledge = platforms.create(980, 80, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.5, 0.5);
 
         return platforms;
@@ -81,8 +92,13 @@ theGame.prototype = {
 
     create: function () {
 
-        this.gameMusic = this.game.add.audio('game');
-        this.gameMusic.loopFull();
+    //    this.gameMusic = this.game.add.audio('game');
+    //    this.gameMusic.loopFull();
+
+        this.death = this.game.add.audio('death');
+        this.shoot = this.game.add.audio('shoot');
+        this.platform_hit = this.game.add.audio('platform_hit');
+        this.atom_hit = this.game.add.audio('atom_hit');
 
         //  We're going to be using physics, so enable the Arcade Physics system
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -131,10 +147,10 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(150, 50, 'atom2');
+        this.player2 = this.game.add.sprite(150, 80, 'atom2');
 
 
-        this.player2.charge = -1;
+        this.player2.charge = 1;
         this.player2.checkWorldBounds = true;
         this.player2.events.onOutOfBounds.add(this.score, this);
 
@@ -181,7 +197,7 @@ theGame.prototype = {
         // this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
         // WASD + altgr
 
-        if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT) && this.lastShot < (Date.now() - 1000)) {
+        if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT) && this.lastShot < (Date.now() - 500)) {
             //  Create a star inside of the 'stars' group
 
 
@@ -247,6 +263,8 @@ theGame.prototype = {
                 star.animations.add('wobble', [0,2,4], 10, true);
                 star.animations.play("wobble");
 
+                this.shoot.play();
+
                 if (direction != 0) {
                     star.body.velocity.x = 300 * direction;
                 }
@@ -262,7 +280,7 @@ theGame.prototype = {
 
 
 
-        if (this.game.input.keyboard.isDown(Phaser.Keyboard.ALT) && this.lastShot2 < (Date.now() - 1000)) {
+        if (this.game.input.keyboard.isDown(Phaser.Keyboard.ALT) && this.lastShot2 < (Date.now() - 500)) {
             //  Create a star inside of the 'stars' group
 
 
@@ -327,10 +345,7 @@ theGame.prototype = {
                     console.log("shoot RIGHT");
                 }
 
-
-
-
-
+                this.shoot.play();
 
 
                 if (direction != 0) {
@@ -376,19 +391,19 @@ theGame.prototype = {
 
         // Removes the star from the screen
         star.kill();
-
+        this.atom_hit.play();
         player.charge *= -1;
         if (player.name == "Player 2") {
             if (player.charge == 1) {
-                player.animations.play('idle_b');
-            } else {
                 player.animations.play('idle_r');
+            } else {
+                player.animations.play('idle_b');
             }
         } else {
             if (player.charge == 1) {
                 player.animations.play('idle_r');
             } else {
-                player.animations.play('idle_r');
+                player.animations.play('idle_b');
             }
         }
 
@@ -398,8 +413,14 @@ theGame.prototype = {
 
         // Removes the star from the screen
         star.kill();
-
+        this.platform_hit.play();
         platform.charge *= -1;
+
+        if (platform.charge == 1) {
+            platform.frame = 1;
+        } else {
+            platform.frame = 0;
+        }
     },
 
     checkAttracion: function (platform, player) {
@@ -489,6 +510,14 @@ theGame.prototype = {
 
     score: function (player) {
 
+        if (this.scored) {
+            return;
+        }
+
+        this.scored = true;
+
+        this.death.play();
+
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
 
@@ -522,11 +551,13 @@ theGame.prototype = {
             this.game.time.events.add(Phaser.Timer.SECOND * 3, this.backToTitle, this);
         } else {
             this.game.time.events.add(Phaser.Timer.SECOND * 3, this.restoreStage, this);
-
         }
     },
 
     restoreStage: function () {
+
+        this.scored = false;
+
         this.scoredText.kill()
         this.platforms.callAll('kill');
         this.platforms = this.createPlatforms();
@@ -534,10 +565,15 @@ theGame.prototype = {
         this.player.x = 820;
         this.player.y = 500;
         this.player.body.velocity.setTo(0, 0);
+        this.player.charge = -1;
+        this.player.animations.play('idle_b');
 
-        this.player2.x = 200;
-        this.player2.y = 50;
+
+        this.player2.x = 150;
+        this.player2.y = 80;
         this.player2.body.velocity.setTo(0, 0);
+        this.player2.charge = 1;
+        this.player2.animations.play('idle_r');
 
     },
 
