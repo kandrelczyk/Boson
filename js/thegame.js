@@ -90,6 +90,7 @@ theGame.prototype = {
         ledge = platforms.create(200, 300, 'platform3');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.3, 0.3);
 
         // game.add.tween(stars.position).to({y:100}, 2200, Phaser.Easing.Back.InOut, true, 2000, 20, true).loop(true);
@@ -131,7 +132,9 @@ theGame.prototype = {
 
         //  Player physics properties. Give the little guy a slight bounce.
         this.player.body.bounce.y = 0;
+        this.player.body.bounce.x = 0;
         this.player.body.gravity.y = 1;
+        this.player.body.gravity.x = 1;
         this.player.body.collideWorldBounds = false;
 
         //  Our two animations, walking left and right.
@@ -169,7 +172,9 @@ theGame.prototype = {
 
         //  Player physics properties. Give the little guy a slight bounce.
         this.player2.body.bounce.y = 0;
+        this.player2.body.bounce.x = 0;
         this.player2.body.gravity.y = 1;
+        this.player2.body.gravity.x = 1;
         this.player2.body.collideWorldBounds = false;
 
         //  Our two animations, walking left and right.
@@ -230,33 +235,33 @@ theGame.prototype = {
                 var star;
                 if (cursors.down.isDown && cursors.left.isDown) {
                     star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y + 40, 'bullet');
-                    star.body.velocity.y = 300;
+                    star.body.velocity.y = 1000;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (cursors.down.isDown && cursors.right.isDown) {
                     star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 40, 'bullet');
-                    star.body.velocity.y = 300;
+                    star.body.velocity.y = 1000;
                     console.log("SHOOT DOWN RIGHT")
                 }
                 else if (cursors.up.isDown && cursors.left.isDown) {
                     star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y, 'bullet');
-                    star.body.velocity.y = -300;
+                    star.body.velocity.y = -1000;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (cursors.up.isDown && cursors.right.isDown) {
                     star = stars.create(this.player.body.x + (80 * direction), this.player.body.y, 'bullet');
-                    star.body.velocity.y = -300;
+                    star.body.velocity.y = -1000;
                     console.log("SHOOT UP RIGHT")
                 }
 
                 else if (cursors.down.isDown) {
                     star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y + 70, 'bullet');
-                    star.body.velocity.y = 300;
+                    star.body.velocity.y = 1000;
                     console.log("shoot DOWN");
                 }
                 else if (cursors.up.isDown) {
                     star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y - 20, 'bullet');
-                    star.body.velocity.y = -300;
+                    star.body.velocity.y = -1000;
                     console.log("shoot UP");
                 }
                 else if (cursors.left.isDown) {
@@ -275,7 +280,7 @@ theGame.prototype = {
                 this.shoot.play();
 
                 if (direction != 0) {
-                    star.body.velocity.x = 300 * direction;
+                    star.body.velocity.x = 1000 * direction;
                 }
 
                 star.body.gravity.y = 0;
@@ -313,23 +318,23 @@ theGame.prototype = {
 
                 if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
                     var star = stars.create(this.player2.body.x + (50 * direction) + 30, this.player2.body.y + 40, 'bullet');
-                    star.body.velocity.y = 300;
+                    star.body.velocity.y = 1000;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
                     var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y + 40, 'bullet');
-                    star.body.velocity.y = 300;
+                    star.body.velocity.y = 1000;
                     console.log("SHOOT DOWN RIGHT")
                 }
                 
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
                     var star = stars.create(this.player2.body.x + (50 * direction) + 30, this.player2.body.y, 'bullet');
-                    star.body.velocity.y = -300;
+                    star.body.velocity.y = -1000;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
                     var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y, 'bullet');
-                    star.body.velocity.y = -300;
+                    star.body.velocity.y = -1000;
                     console.log("SHOOT UP RIGHT")
                 }
 
@@ -337,12 +342,12 @@ theGame.prototype = {
 
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S)) {
                     var star = stars.create(this.player2.body.x + (40 * direction) + 25, this.player2.body.y + 70, 'bullet');
-                    star.body.velocity.y = 300;
+                    star.body.velocity.y = 1000;
                     console.log("shoot DOWN");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W)) {
                     var star = stars.create(this.player2.body.x + (40 * direction) + 25, this.player2.body.y - 20, 'bullet');
-                    star.body.velocity.y = -300;
+                    star.body.velocity.y = -1000;
                     console.log("shoot UP");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
@@ -358,7 +363,7 @@ theGame.prototype = {
 
 
                 if (direction != 0) {
-                    star.body.velocity.x = 300 * direction;
+                    star.body.velocity.x = 1000 * direction;
 
                 }
 
@@ -369,30 +374,30 @@ theGame.prototype = {
             }
         }
 
-
-
-
-
-
-
-
-
         
         this.game.physics.arcade.collide(this.player, stars, this.collectStar, null, this);
         this.game.physics.arcade.collide(this.player2, stars, this.collectStar, null, this);
 
 
+        console.log("11 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
+
         this.platforms.forEach(this.checkAttracion, this, true, this.player);
+        console.log("22 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
+
         this.platforms.forEach(this.checkAttracion, this, true, this.player2);
 
 
         this.player.magneticVelocityY = this.player.body.velocity.y;
         this.player.magneticVelocityX = this.player.body.velocity.x;
+        console.log("33 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
+
         this.game.physics.arcade.collide(this.player, this.platforms, this.collidePlatform, null, this);
+        console.log("44 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
 
         this.player2.magneticVelocityY = this.player2.body.velocity.y;
         this.player2.magneticVelocityX = this.player2.body.velocity.x;
         this.game.physics.arcade.collide(this.player2, this.platforms, this.collidePlatform, null, this);
+        console.log("55 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
 
     },
 
@@ -449,16 +454,16 @@ theGame.prototype = {
         var distanceH = 0;
 
         if (playerX <= (platformX + platformW) && platformX <=(playerX + playerW)) {
-            if (Math.abs(playerY - platformY) < 100) {
+            if (Math.abs(playerY - platformY) < 200) {
                 affectsV = true;
-                distanceV = Math.abs(200/(playerY - platformY));
+                distanceV = 50;
             }
         }
 
         if (playerY <= (platformY + platformH) && platformY <=(playerY + playerH)) {
-            if (Math.abs(playerX - platformX) < 100) {
+            if (Math.abs(playerX - platformX) < 200) {
                 affectsH = true;
-                distanceH = Math.abs(200/(playerX - platformX));
+                distanceH = 50;
 
             }
         }
@@ -467,16 +472,16 @@ theGame.prototype = {
 
             if (platform.charge != player.charge) {
                 if (playerY >= platformY) {
-                    player.body.velocity.y += -distanceV;
+                    player.body.velocity.y = -distanceV;
                 } else {
-                    player.body.velocity.y += distanceV;
+                    player.body.velocity.y = distanceV;
                 }
 
             } else {
                 if (playerY >= platformY) {
-                    player.body.velocity.y += distanceV;
+                    player.body.velocity.y = distanceV;
                 } else {
-                    player.body.velocity.y += -distanceV;
+                    player.body.velocity.y = -distanceV;
                 }
             }
 
@@ -485,18 +490,18 @@ theGame.prototype = {
         if (affectsH) {
             if (platform.charge != player.charge) {
                 if (playerX >= platformX) {
-                    player.body.velocity.x += -distanceH;
+                    player.body.velocity.x = -distanceH;
                 } else {
-                    player.body.velocity.x += distanceH;
+                    player.body.velocity.x = distanceH;
                 }
 
             } else {
                 if (playerX >= platformX) {
 
-                    player.body.velocity.x += distanceH;
+                    player.body.velocity.x = distanceH;
                 } else {
 
-                    player.body.velocity.x += -distanceH;
+                    player.body.velocity.x = -distanceH;
                 }
             }
         }
@@ -504,6 +509,10 @@ theGame.prototype = {
     },
 
     collidePlatform: function (player, platform) {
+
+        if (player.name == "Player 1") {
+            console.log("conlide");
+        }
 
         if (player.charge != platform.charge) {
 
