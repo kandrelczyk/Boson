@@ -8,6 +8,10 @@ theGame.prototype = {
 
     create: function () {
 
+
+        this.gameMusic = this.game.add.audio('game');
+        this.gameMusic.loopFull();
+
         //  We're going to be using physics, so enable the Arcade Physics system
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -34,12 +38,13 @@ theGame.prototype = {
         ledge.charge = 1;
 
         // The player and its settings
-        player = this.game.add.sprite(350, this.game.world.height - 150, 'dude');
+        player = this.game.add.sprite(350, 400, 'atom');
 
         player.charge = -1;
         player.checkWorldBounds = true;
         player.events.onOutOfBounds.add(this.gameOver, this);
 
+        player.scale.setTo(0.8, 0.8);
         //  We need to enable physics on the player
         this.game.physics.arcade.enable(player);
 
@@ -49,8 +54,8 @@ theGame.prototype = {
         player.body.collideWorldBounds = false;
 
         //  Our two animations, walking left and right.
-        player.animations.add('left', [0, 1, 2, 3], 10, true);
-        player.animations.add('right', [5, 6, 7, 8], 10, true);
+        player.animations.add('idle_b', [5, 6, 7, 8, 9, 10, 11, 12], 10, true);
+        player.animations.add('idle_r', [13, 14, 15, 16, 17, 18, 19, 20], 10, true);
 
         //  Finally some stars to collect
         stars = this.game.add.group();
@@ -58,6 +63,7 @@ theGame.prototype = {
         //  We will enable physics for any star that is created in this group
         stars.enableBody = true;
 
+        player.animations.play('idle_b');
 
 
         //  Our controls.
@@ -73,19 +79,8 @@ theGame.prototype = {
         }
 
         //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-        //  this.game.physics.arcade.overlap(player, stars, this.collectStar, null, this);
+        this.game.physics.arcade.overlap(player, stars, this.collectStar, null, this);
         this.game.physics.arcade.overlap(platforms, stars, this.changePlatform, null, this);
-
-        if (cursors.left.isDown) {
-            //  Move to the left
-            player.animations.play('left');
-        }
-        else if (cursors.right.isDown) {
-            //  Move to the right
-            player.animations.play('right');
-        }
-        player.frame = 4;
-
 
         // this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
         // WASD + altgr
@@ -179,12 +174,17 @@ theGame.prototype = {
 
     },
 
-        collectStar: function (player, star){
+    collectStar: function (player, star){
 
         // Removes the star from the screen
          star.kill();
 
         player.charge *= -1;
+        if (player.charge == 1) {
+            player.animations.play('idle_b');
+        } else {
+            player.animations.play('idle_r');
+        }
 
     },
 
@@ -274,7 +274,6 @@ theGame.prototype = {
     collidePlatform: function (player, platform) {
 
         if (player.charge != platform.charge) {
-            console.log('here');
 
             player.body.velocity.x = 0;
             player.body.velocity.y = 0;
@@ -286,6 +285,7 @@ theGame.prototype = {
     },
 
     gameOver: function (player) {
+        this.gameMusic.stop();
         this.game.state.start("GameTitle");
     }
 }
