@@ -1,6 +1,7 @@
 var theGame = function(game) {
 
     this.lastShot = 0;
+    this.lastShot2 = 0;
 }
 
 theGame.prototype = {
@@ -123,7 +124,7 @@ theGame.prototype = {
         // PLAYER 2 implantation:
 
         // The player2 and its settings
-        player2 = this.game.add.sprite(50, 50, 'atom');
+        player2 = this.game.add.sprite(500, 500, 'atom');
 
         player2.charge = -1;
         player2.checkWorldBounds = true;
@@ -250,6 +251,100 @@ theGame.prototype = {
                 star.body.bounce.y = 0.7 + Math.random() * 0.2;
             }
         }
+
+
+
+
+        if (this.game.input.keyboard.isDown(Phaser.Keyboard.ALT) && this.lastShot2 < (Date.now() - 1000)) {
+            //  Create a star inside of the 'stars' group
+
+
+            var direction = 0;
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+                direction = 1;
+            }
+            else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+                direction = -1;
+            }
+
+
+
+            if (direction != 0 || this.game.input.keyboard.isDown(Phaser.Keyboard.W) || this.game.input.keyboard.isDown(Phaser.Keyboard.S)) {
+                this.lastShot2 = Date.now();
+
+
+                //  Let gravity do its thing
+                
+
+
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+                    var star = stars.create(player.body.x + (50 * direction) + 30, player.body.y + 40, 'star');
+                    star.body.velocity.y = 300;
+                    console.log("SHOOT DOWN LEFT")
+                }
+                else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+                    var star = stars.create(player.body.x + (80 * direction), player.body.y + 40, 'star');
+                    star.body.velocity.y = 300;
+                    console.log("SHOOT DOWN RIGHT")
+                }
+                // TE HAS QUEDADO AQUI!
+                else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+                    var star = stars.create(player.body.x + (50 * direction) + 30, player.body.y, 'star');
+                    star.body.velocity.y = -300;
+                    console.log("SHOOT UP LEFT")
+                }
+                else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+                    var star = stars.create(player.body.x + (80 * direction), player.body.y, 'star');
+                    star.body.velocity.y = -300;
+                    console.log("SHOOT UP RIGHT")
+                }
+
+                // TTE QUEDASTE QUI!
+
+                else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S)) {
+                    var star = stars.create(player.body.x + (40 * direction) + 25, player.body.y + 60, 'star');
+                    star.body.velocity.y = 300;
+                    console.log("shoot DOWN");
+                }
+                else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W)) {
+                    var star = stars.create(player.body.x + (40 * direction) + 25, player.body.y - 20, 'star');
+                    star.body.velocity.y = -300;
+                    console.log("shoot UP");
+                }
+                else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+                    var star = stars.create(player.body.x + (20 * direction), player.body.y + 15, 'star');
+                    console.log("shoot LEFT");
+                }
+                else if (this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+                    var star = stars.create(player.body.x + (80 * direction), player.body.y + 15, 'star');
+                    console.log("shoot RIGHT");
+                }
+                
+
+
+                
+                
+                
+
+                if (direction != 0) {
+                    star.body.velocity.x = 300 * direction;
+
+                }
+
+                star.body.gravity.y = 0;
+
+                //  This just gives each star a slightly random bounce value
+                star.body.bounce.y = 0.7 + Math.random() * 0.2;
+            }
+        }
+
+
+
+
+
+
+
+
 
         platforms.forEach(this.checkAttracion, this, true, player);
         platforms.forEach(this.checkAttracion, this, true, player2);
