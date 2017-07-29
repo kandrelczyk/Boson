@@ -159,15 +159,12 @@ theGame.prototype = {
     },
 
     checkAtraction: function (player, platform) {
-        console.log("checkAttr " + platform.scale.x + " pl " + player.scale.x);
 
         if (platform.scale.x == 1 && player.scale.x != 1.2) {
-            console.log("jump checkAttr " + platform.scale.x + " pl " + player.scale.x);
 
             player.body.velocity.y = -350;
         }
         if (platform.scale.x == 1.2 && player.scale.x != 1) {
-            console.log("jump checkAttr " + platform.scale.x + " pl " + player.scale.x);
 
             player.body.velocity.y = -350;
         }
