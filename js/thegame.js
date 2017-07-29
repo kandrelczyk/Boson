@@ -22,9 +22,9 @@ theGame.prototype = {
         //  We will enable physics for any object that is created in this group
         platforms.enableBody = true;
 
-        //  Now let's create two ledges
+        
 
-        var ledge = platforms.create(70, 10, 'platform2');
+        var ledge = platforms.create(150, 10, 'platform2');
         ledge.body.immovable = true;
         ledge.charge = -1;
         ledge.frame = 0;
@@ -49,19 +49,20 @@ theGame.prototype = {
         ledge.frame = 0;
         ledge.scale.setTo(0.5, 0.5);
 
-        //abajo horiz
+        
         ledge = platforms.create(45, 580, 'platform3');
         ledge.body.immovable = true;
         ledge.charge = -1;
         ledge.frame = 0;
         ledge.scale.setTo(0.3, 0.5);
 
-        //abajo horiz
-        ledge = platforms.create(860, 580, 'platform3');
+        
+        ledge = platforms.create(800, 580, 'platform3');
         ledge.body.immovable = true;
         ledge.charge = 1;
         ledge.frame = 1;
         ledge.scale.setTo(0.3, 0.5);
+        ledge.bounciness = 0;
 
         ledge = platforms.create(20, 430, 'platform1');
         ledge.body.immovable = true;
@@ -90,9 +91,9 @@ theGame.prototype = {
         ledge = platforms.create(200, 300, 'platform3');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.3, 0.3);
-
-        // game.add.tween(stars.position).to({y:100}, 2200, Phaser.Easing.Back.InOut, true, 2000, 20, true).loop(true);
+        this.game.add.tween(ledge.position).to({x:700}, 3000, Phaser.Easing.Back.InOut, true, 2000, 20, true).loop(true);
 
 
 
@@ -120,7 +121,7 @@ theGame.prototype = {
 
         this.platforms = this.createPlatforms();
         // The player and its settings
-        this.player = this.game.add.sprite(880, 480, 'atom');
+        this.player = this.game.add.sprite(790, 480, 'atom');
         this.player.charge = -1;
         this.player.checkWorldBounds = true;
         this.player.events.onOutOfBounds.add(this.score, this);
@@ -131,7 +132,9 @@ theGame.prototype = {
 
         //  Player physics properties. Give the little guy a slight bounce.
         this.player.body.bounce.y = 0;
+        this.player.body.bounce.x = 0;
         this.player.body.gravity.y = 1;
+        this.player.body.gravity.x = 1;
         this.player.body.collideWorldBounds = false;
 
         //  Our two animations, walking left and right.
@@ -169,7 +172,9 @@ theGame.prototype = {
 
         //  Player physics properties. Give the little guy a slight bounce.
         this.player2.body.bounce.y = 0;
+        this.player2.body.bounce.x = 0;
         this.player2.body.gravity.y = 1;
+        this.player2.body.gravity.x = 1;
         this.player2.body.collideWorldBounds = false;
 
         //  Our two animations, walking left and right.
@@ -260,7 +265,7 @@ theGame.prototype = {
                     console.log("shoot UP");
                 }
                 else if (cursors.left.isDown) {
-                    var star = stars.create(this.player.body.x + (20 * direction), this.player.body.y + 15, 'bullet');
+                    var star = stars.create(this.player.body.x + (20 * direction) + 10, this.player.body.y + 15, 'bullet');
 
                     console.log("shoot LEFT");
                 }
@@ -346,7 +351,7 @@ theGame.prototype = {
                     console.log("shoot UP");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-                    var star = stars.create(this.player2.body.x + (20 * direction), this.player2.body.y + 15, 'bullet');
+                    var star = stars.create(this.player2.body.x + (20 * direction) + 10, this.player2.body.y + 15, 'bullet');
                     console.log("shoot LEFT");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
