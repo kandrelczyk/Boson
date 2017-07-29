@@ -175,6 +175,7 @@ theGame.prototype = {
 
         this.death = this.game.add.audio('death');
         this.shoot = this.game.add.audio('shoot');
+        this.explode = this.game.add.audio('explode');
         this.platform_hit = this.game.add.audio('platform_hit');
         this.atom_hit = this.game.add.audio('atom_hit');
 
@@ -629,7 +630,16 @@ theGame.prototype = {
 
         this.scored = true;
 
-        this.death.play();
+        this.gameMusic.stop();
+
+        if (this.player2.life == 0 || this.player.life == 0) {
+            this.explode.play();
+            if (this.player2.life == 0) {
+                this.player2.scale.setTo(0);
+            } else {
+                this.player.scale.setTo(0);
+            }
+        }
 
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
@@ -680,6 +690,7 @@ theGame.prototype = {
         this.player.body.velocity.setTo(0, 0);
         this.player.charge = -1;
         this.player.animations.play('idle_b');
+        this.player.scale.setTo(0.8, 0.8);
 
         this.player.life = 3;
         this.player2.life = 3;
@@ -689,6 +700,10 @@ theGame.prototype = {
         this.player2.body.velocity.setTo(0, 0);
         this.player2.charge = 1;
         this.player2.animations.play('idle_r');
+        this.player2.scale.setTo(0.8, 0.8);
+
+        this.gameMusic.loopFull(0.3);
+
 
     },
 
