@@ -16,10 +16,10 @@ theGame.prototype = {
 
     createPlatforms: function () {
 
-//  The platforms group contains the ground and the 2 ledges we can jump on
+
         var platforms = this.game.add.group();
 
-        //  We will enable physics for any object that is created in this group
+        
         platforms.enableBody = true;
 
         
@@ -93,7 +93,13 @@ theGame.prototype = {
         ledge.charge = 1;
         ledge.frame = 1;
         ledge.scale.setTo(0.3, 0.3);
-        this.game.add.tween(ledge.position).to({x:700}, 3000, Phaser.Easing.Back.InOut, true, 2000, 20, true).loop(true);
+        // this.game.add.tween(ledge.position).to({x:700}, 3000, Phaser.Easing.Back.InOut, true, 2000, 20, true).loop(true);
+
+        ledge = platforms.create(700, 300, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.frame = 1;
+        ledge.scale.setTo(0.3, 0.3);
 
 
 
@@ -204,15 +210,14 @@ theGame.prototype = {
         this.score1Text.setText(this.score1);
         this.score2Text.setText(this.score2);
 
-        //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+        
         this.game.physics.arcade.overlap(this.player, stars, this.collectStar, null, this);
         this.game.physics.arcade.overlap(this.platforms, stars, this.changePlatform, null, this);
 
-        // this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
-        // WASD + altgr
+       
 
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT) && this.lastShot < (Date.now() - 500)) {
-            //  Create a star inside of the 'stars' group
+            
 
 
             var direction = 0;
@@ -229,48 +234,48 @@ theGame.prototype = {
                 this.lastShot = Date.now();
 
 
-                //  Let gravity do its thing
+                
                 
 
                 var star;
                 if (cursors.down.isDown && cursors.left.isDown) {
-                    star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y + 40, 'bullet');
+                    star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
                     star.body.velocity.y = 1000;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (cursors.down.isDown && cursors.right.isDown) {
-                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 40, 'bullet');
+                    star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
                     star.body.velocity.y = 1000;
                     console.log("SHOOT DOWN RIGHT")
                 }
                 else if (cursors.up.isDown && cursors.left.isDown) {
-                    star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y, 'bullet');
+                    star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
                     star.body.velocity.y = -1000;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (cursors.up.isDown && cursors.right.isDown) {
-                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y, 'bullet');
+                    star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
                     star.body.velocity.y = -1000;
                     console.log("SHOOT UP RIGHT")
                 }
 
                 else if (cursors.down.isDown) {
-                    star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y + 70, 'bullet');
+                    star = stars.create(this.player.body.x + 35, this.player.body.y + 30, 'bullet');
                     star.body.velocity.y = 1000;
                     console.log("shoot DOWN");
                 }
                 else if (cursors.up.isDown) {
-                    star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y - 20, 'bullet');
+                    star = stars.create(this.player.body.x + 35, this.player.body.y + 30, 'bullet');
                     star.body.velocity.y = -1000;
                     console.log("shoot UP");
                 }
                 else if (cursors.left.isDown) {
-                    var star = stars.create(this.player.body.x + (20 * direction) + 10, this.player.body.y + 15, 'bullet');
+                    var star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
 
                     console.log("shoot LEFT");
                 }
                 else if (cursors.right.isDown) {
-                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 15, 'bullet');
+                    star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
                     console.log("shoot RIGHT");
                 }
 
@@ -285,8 +290,9 @@ theGame.prototype = {
 
                 star.body.gravity.y = 0;
 
-                //  This just gives each star a slightly random bounce value
-                star.body.bounce.y = 0.7 + Math.random() * 0.2;
+                
+
+                star.from = "Player 1";
             }
         }
 
@@ -295,7 +301,7 @@ theGame.prototype = {
 
 
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.ALT) && this.lastShot2 < (Date.now() - 500)) {
-            //  Create a star inside of the 'stars' group
+            
 
 
             var direction = 0;
@@ -312,28 +318,28 @@ theGame.prototype = {
                 this.lastShot2 = Date.now();
 
 
-                //  Let gravity do its thing
+                
                 
 
 
                 if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-                    var star = stars.create(this.player2.body.x + (50 * direction) + 30, this.player2.body.y + 40, 'bullet');
+                    var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
                     star.body.velocity.y = 1000;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-                    var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y + 40, 'bullet');
+                    var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
                     star.body.velocity.y = 1000;
                     console.log("SHOOT DOWN RIGHT")
                 }
                 
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-                    var star = stars.create(this.player2.body.x + (50 * direction) + 30, this.player2.body.y, 'bullet');
+                    var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
                     star.body.velocity.y = -1000;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-                    var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y, 'bullet');
+                    var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
                     star.body.velocity.y = -1000;
                     console.log("SHOOT UP RIGHT")
                 }
@@ -341,21 +347,21 @@ theGame.prototype = {
                 
 
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S)) {
-                    var star = stars.create(this.player2.body.x + (40 * direction) + 25, this.player2.body.y + 70, 'bullet');
+                    var star = stars.create(this.player2.body.x + 35, this.player2.body.y + 30, 'bullet');
                     star.body.velocity.y = 1000;
                     console.log("shoot DOWN");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-                    var star = stars.create(this.player2.body.x + (40 * direction) + 25, this.player2.body.y - 20, 'bullet');
+                    var star = stars.create(this.player2.body.x + 35, this.player2.body.y + 30, 'bullet');
                     star.body.velocity.y = -1000;
                     console.log("shoot UP");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-                    var star = stars.create(this.player2.body.x + (20 * direction) + 10, this.player2.body.y + 15, 'bullet');
+                    var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
                     console.log("shoot LEFT");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-                    var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y + 15, 'bullet');
+                    var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
                     console.log("shoot RIGHT");
                 }
 
@@ -369,8 +375,10 @@ theGame.prototype = {
 
                 star.body.gravity.y = 0;
 
-                //  This just gives each star a slightly random bounce value
-                star.body.bounce.y = 0.7 + Math.random() * 0.2;
+
+                star.from = "Player 2";
+
+                
             }
         }
 
@@ -403,7 +411,13 @@ theGame.prototype = {
 
     collectStar: function (player, star){
 
-        // Removes the star from the screen
+        
+        
+
+        if (star.from === player.name){
+            return;
+        }
+        else{
         star.kill();
         this.atom_hit.play();
         player.charge *= -1;
@@ -420,12 +434,12 @@ theGame.prototype = {
                 player.animations.play('idle_b');
             }
         }
-
+        }
     },
 
     changePlatform: function (platform, star) {
 
-        // Removes the star from the screen
+        
         star.kill();
         this.platform_hit.play();
         platform.charge *= -1;
