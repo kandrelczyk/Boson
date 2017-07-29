@@ -25,27 +25,69 @@ theGame.prototype = {
         platforms.enableBody = true;
 
         //  Now let's create two ledges
-        /*
-        var ledge = platforms.create(450, 300, 'ground');
-        ledge.body.immovable = true;
-        ledge.charge = 1;
-        */
 
-        var ledge = platforms.create(-150, 150, 'ground');
+        var ledge = platforms.create(170, 10, 'ground');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        ledge.scale.setTo(0.3, 0.5);
 
-        ledge = platforms.create(50, 500, 'ground');
+        ledge = platforms.create(800, 10, 'ground');
         ledge.body.immovable = true;
         ledge.charge = 1;
+        ledge.scale.setTo(0.3, 0.5);
 
-        ledge = platforms.create(400, 0, 'ground');
+        ledge = platforms.create(480, 20, 'ground');
         ledge.body.immovable = true;
         ledge.charge = 1;
-        ledge.scale.setTo(0.1,10);
+        ledge.scale.setTo(0.05, 3);
+
+        ledge = platforms.create(480, 480, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.05, 3);
+
+        ledge = platforms.create(100, 580, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.3, 0.5);
+
+        ledge = platforms.create(800, 580, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.3, 0.5);
+
+        ledge = platforms.create(20, 430, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.05, 3);
+
+        ledge = platforms.create(20, 80, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.05, 3);
+
+        ledge = platforms.create(980, 430, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.05, 3);
+
+        ledge = platforms.create(980, 80, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.05, 3);
+
+        ledge = platforms.create(300, 250, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.05, 2);
+
+        ledge = platforms.create(700, 250, 'ground');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.scale.setTo(0.05, 2);
 
         // The player and its settings
-        player = this.game.add.sprite(350, 400, 'atom');
+        player = this.game.add.sprite(70, 70, 'atom');
 
         player.charge = -1;
         player.checkWorldBounds = true;
@@ -209,46 +251,42 @@ theGame.prototype = {
         var platformX = platform.body.x;
         var platformY = platform.body.y;
 
-        console.log("width: " + platformW + " height: " + platformH);
-        
-
-        var playerX = player.body.x;
-        var playerY = player.body.y;
+        var playerX = player.body.x + player.body.width / 2;
+        var playerY = player.body.y + player.body.height / 2;
 
 
         var affectsV = false;
         var affectsH = false;
 
         if (playerX >= platformX && playerX <= platformX + platformW) {
-            if (Math.abs(playerY - platformY) < 150) {
+            if (Math.abs(playerY - platformY) < 250) {
                 affectsV = true;
             }
         }
 
-        if (playerY <= platformY && playerY >= platformY - platformH) {
-            if (Math.abs(playerX - platformX) < 150) {
+        if (playerY >= platformY && playerY <= platformY + platformH) {
+            if (Math.abs(playerX - platformX) < 250) {
                 affectsH = true;
             }
         }
 
         if (affectsV) {
-            console.log("attract Y")
 
             if (platform.charge != player.charge) {
                 if (playerY >= platformY) {
+                    console.log("attract Y -")
                     player.body.velocity.y = -50;
                 } else {
+                    console.log("attract Y +")
                     player.body.velocity.y = 50;
                 }
 
             } else {
                 if (playerY >= platformY) {
                     console.log("repeal Y +")
-
                     player.body.velocity.y = 50;
                 } else {
                     console.log("repeal Y -")
-
                     player.body.velocity.y = -50;
                 }
             }
@@ -259,11 +297,12 @@ theGame.prototype = {
         if (affectsH) {
             if (platform.charge != player.charge) {
                 if (playerX >= platformX) {
+                    console.log("attract X -")
                     player.body.velocity.x = -50;
                 } else {
+                    console.log("attract X +")
                     player.body.velocity.x = 50;
                 }
-                console.log("attract X")
 
             } else {
                 if (playerX >= platformX) {
