@@ -85,10 +85,12 @@ theGame.prototype = {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         //  A simple background for our game
-       // this.game.add.sprite('sky');
+        var bg = this.game.add.sprite(0, 0, 'background');
+        bg.scale.setTo(1, 0.7)
+        var tween = this.game.add.tween(bg);
+        tween.to({ x: -29000 }, 500000, 'Linear', true, 0);
+
         this.platforms = this.createPlatforms();
-
-
         // The player and its settings
         this.player = this.game.add.sprite(810, 500, 'atom');
         this.player.charge = -1;
@@ -126,7 +128,7 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(200, 50, 'atom2');
+        this.player2 = this.game.add.sprite(150, 50, 'atom2');
 
 
         this.player2.charge = -1;
@@ -168,12 +170,6 @@ theGame.prototype = {
 
         this.score1Text.setText(this.score1);
         this.score2Text.setText(this.score2);
-
-
-        if (this.player.body.y > this.game.world.height) {
-            this.game.add.text(this.game.world.width / 2, this.game.world.height / 2, 'Game Over', {fontSize: '32px', fill: '#000'});
-            this.game.state.start("GameTitle",true,false);
-        }
 
         //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
         this.game.physics.arcade.overlap(this.player, stars, this.collectStar, null, this);
@@ -437,48 +433,38 @@ theGame.prototype = {
 
             if (platform.charge != player.charge) {
                 if (playerY >= platformY) {
-                    console.log("attract Y -")
                     player.body.velocity.y += -distanceV;
                 } else {
-                    console.log("attract Y +")
                     player.body.velocity.y += distanceV;
                 }
 
             } else {
                 if (playerY >= platformY) {
-                    console.log("repeal Y +")
                     player.body.velocity.y += distanceV;
                 } else {
-                    console.log("repeal Y -")
                     player.body.velocity.y += -distanceV;
                 }
             }
-          //  console.log("p: " + playerY + " plat: " + platformY + " vel " + player.body.velocity.y);
 
         }
 
         if (affectsH) {
             if (platform.charge != player.charge) {
                 if (playerX >= platformX) {
-                    console.log("attract X -")
                     player.body.velocity.x += -distanceH;
                 } else {
-                    console.log("attract X +")
                     player.body.velocity.x += distanceH;
                 }
 
             } else {
                 if (playerX >= platformX) {
-                    console.log("repeal X +")
 
                     player.body.velocity.x += distanceH;
                 } else {
-                    console.log("repeal X -")
 
                     player.body.velocity.x += -distanceH;
                 }
             }
-          //  console.log("Hplatform: x " + platformX + " y" + platformY + " wid " + platformW + " hei" + platformH);
         }
 
     },
