@@ -21,24 +21,31 @@ theGame.prototype = {
         platforms.enableBody = true;
 
         //  Now let's create two ledges
-        var ledge = platforms.create(400, 400, 'ground');
+        var ledge = platforms.create(400, 300, 'ground');
         ledge.body.immovable = true;
+        ledge.charge = 1;
 
-        ledge = platforms.create(-150, 250, 'ground');
+        ledge = platforms.create(-150, 150, 'ground');
         ledge.body.immovable = true;
+        ledge.charge = 1;
 
         ledge = platforms.create(50, 500, 'ground');
         ledge.body.immovable = true;
+        ledge.charge = 1;
 
         // The player and its settings
-        player = this.game.add.sprite(32, this.game.world.height - 150, 'dude');
+        player = this.game.add.sprite(350, this.game.world.height - 150, 'dude');
+
+        player.charge = -1;
+        player.checkWorldBounds = true;
+        player.events.onOutOfBounds.add(this.gameOver, this);
 
         //  We need to enable physics on the player
         this.game.physics.arcade.enable(player);
 
         //  Player physics properties. Give the little guy a slight bounce.
-        player.body.bounce.y = 0.2;
-        player.body.gravity.y = 300;
+        player.body.bounce.y = 0;
+        player.body.gravity.y = 1;
         player.body.collideWorldBounds = false;
 
         //  Our two animations, walking left and right.
@@ -68,29 +75,17 @@ theGame.prototype = {
         //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
         this.game.physics.arcade.overlap(player, stars, this.collectStar, null, this);
         this.game.physics.arcade.overlap(platforms, stars, this.changePlatform, null, this);
-        this.game.physics.arcade.collide(player, platforms, this.checkAtraction, null, this);
-
-        //  Reset the players velocity (movement)
-        player.body.velocity.x = 0;
 
         if (cursors.left.isDown) {
             //  Move to the left
-            player.body.velocity.x = -150;
-
             player.animations.play('left');
         }
         else if (cursors.right.isDown) {
             //  Move to the right
-            player.body.velocity.x = 150;
-
             player.animations.play('right');
         }
-        else {
-            //  Stand still
-            player.animations.stop();
+        player.frame = 4;
 
-            player.frame = 4;
-        }
 
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.lastShot < (Date.now() - 1000)) {
             //  Create a star inside of the 'stars' group
@@ -129,6 +124,13 @@ theGame.prototype = {
                 star.body.bounce.y = 0.7 + Math.random() * 0.2;
             }
         }
+
+        platforms.forEach(this.checkAttracion, this, true, player);
+
+        player.magneticVelocityY = player.body.velocity.y;
+        player.magneticVelocityX = player.body.velocity.x;
+        this.game.physics.arcade.collide(player, platforms, this.collidePlatform, null, this);
+
     },
 
     collectStar: function (player, star) {
@@ -136,12 +138,7 @@ theGame.prototype = {
         // Removes the star from the screen
         star.kill();
 
-        if (player.scale.x == 1.2) {
-            player.scale.set(1, 1);
-        } else {
-            //  Add and update the score
-            player.scale.set(1.2, 1.2);
-        }
+        player.charge *= -1;
 
     },
 
@@ -150,24 +147,99 @@ theGame.prototype = {
         // Removes the star from the screen
         star.kill();
 
-        if (platform.scale.x == 1.2) {
-            platform.scale.set(1, 1);
+        platform.charge *= -1;
+    },
+
+    checkAttracion: function (platform, player) {
+        var platformW = platform.body.width;
+        var platformH = platform.body.height;
+        var platformX = platform.body.x;
+        var platformY = platform.body.y;
+
+        var playerX = player.body.x;
+        var playerY = player.body.y;
+
+
+        var affectsV = false;
+        var affectsH = false;
+
+        if (playerX >= platformX && playerX <= platformX + platformW) {
+            if (Math.abs(playerY - platformY) < 150) {
+                affectsV = true;
+            }
+        }
+
+        if (playerY <= platformY && playerY >= platformY - platformH) {
+            if (Math.abs(playerX - platformX) < 150) {
+                affectsH = true;
+            }
+        }
+
+        if (affectsV) {
+            console.log("attract Y")
+
+            if (platform.charge != player.charge) {
+                if (playerY >= platformY) {
+                    player.body.velocity.y = -50;
+                } else {
+                    player.body.velocity.y = 50;
+                }
+
+            } else {
+                if (playerY >= platformY) {
+                    console.log("repeal Y +")
+
+                    player.body.velocity.y = 50;
+                } else {
+                    console.log("repeal Y -")
+
+                    player.body.velocity.y = -50;
+                }
+            }
+          //  console.log("p: " + playerY + " plat: " + platformY + " vel " + player.body.velocity.y);
+
+        }
+
+        if (affectsH) {
+            if (platform.charge != player.charge) {
+                if (playerX >= platformX) {
+                    player.body.velocity.x = -50;
+                } else {
+                    player.body.velocity.x = 50;
+                }
+                console.log("attract X")
+
+            } else {
+                if (playerX >= platformX) {
+                    console.log("repeal X +")
+
+                    player.body.velocity.x = 50;
+                } else {
+                    console.log("repeal X -")
+
+                    player.body.velocity.x = -50;
+                }
+            }
+          //  console.log("Hplatform: x " + platformX + " y" + platformY + " wid " + platformW + " hei" + platformH);
+        }
+
+    },
+
+    collidePlatform: function (player, platform) {
+
+        if (player.charge != platform.charge) {
+            console.log('here');
+
+            player.body.velocity.x = 0;
+            player.body.velocity.y = 0;
         } else {
-            //  Add and update the score
-            platform.scale.set(1.2, 1.2);
+            player.body.velocity.x = player.magneticVelocityX;
+            player.body.velocity.y = player.magneticVelocityY;
+
         }
     },
 
-    checkAtraction: function (player, platform) {
-
-        if (platform.scale.x == 1 && player.scale.x != 1.2) {
-
-            player.body.velocity.y = -350;
-        }
-        if (platform.scale.x == 1.2 && player.scale.x != 1) {
-
-            player.body.velocity.y = -350;
-        }
-
+    gameOver: function (player) {
+        this.game.state.start("GameTitle");
     }
 }
