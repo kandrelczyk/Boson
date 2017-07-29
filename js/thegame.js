@@ -88,28 +88,14 @@ theGame.prototype = {
         ledge.frame = 1;
         ledge.scale.setTo(0.5, 0.5);
 
-        ledge = platforms.create(200, 300, 'platform3');
-        ledge.body.immovable = true;
-        ledge.charge = 1;
-        ledge.frame = 1;
-        ledge.scale.setTo(0.3, 0.3);
-        // this.game.add.tween(ledge.position).to({x:700}, 3000, Phaser.Easing.Back.InOut, true, 2000, 20, true).loop(true);
-
-        ledge = platforms.create(700, 300, 'platform3');
-        ledge.body.immovable = true;
-        ledge.charge = 1;
-        ledge.frame = 1;
-        ledge.scale.setTo(0.3, 0.3);
-
-
 
         return platforms;
     },
 
     create: function () {
 
-    //    this.gameMusic = this.game.add.audio('game');
-    //    this.gameMusic.loopFull();
+        this.gameMusic = this.game.add.audio('game');
+        this.gameMusic.loopFull(0.3);
 
         this.death = this.game.add.audio('death');
         this.shoot = this.game.add.audio('shoot');
@@ -127,7 +113,7 @@ theGame.prototype = {
 
         this.platforms = this.createPlatforms();
         // The player and its settings
-        this.player = this.game.add.sprite(790, 480, 'atom');
+        this.player = this.game.add.sprite(800, 480, 'atom');
         this.player.charge = -1;
         this.player.checkWorldBounds = true;
         this.player.events.onOutOfBounds.add(this.score, this);
@@ -146,6 +132,8 @@ theGame.prototype = {
         //  Our two animations, walking left and right.
         this.player.animations.add('idle_b', [5, 6, 7, 8, 9, 10, 11, 12], 10, true);
         this.player.animations.add('idle_r', [13, 14, 15, 16, 17, 18, 19, 20], 10, true);
+        this.player.animations.add('fire_b', [21], 10, false);
+        this.player.animations.add('fire_r', [22], 10, false);
 
         //  Finally some stars to collect
         stars = this.game.add.group();
@@ -165,7 +153,7 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(100, 100, 'atom2');
+        this.player2 = this.game.add.sprite(700, 500, 'atom2');
 
 
         this.player2.charge = 1;
@@ -186,6 +174,8 @@ theGame.prototype = {
         //  Our two animations, walking left and right.
         this.player2.animations.add('idle_b', [5, 6, 7, 8, 9, 10, 11, 12], 10, true);
         this.player2.animations.add('idle_r', [13, 14, 15, 16, 17, 18, 19, 20], 10, true);
+        this.player2.animations.add('fire_b', [21], 10, false);
+        this.player2.animations.add('fire_r', [22], 10, false);
         this.player2.name = 'Player 2';
 
         //  Finally some stars to collect
@@ -196,12 +186,11 @@ theGame.prototype = {
 
         this.player2.animations.play('idle_r');
 
-
         this.score1Text = this.game.add.text(20, 10, this.score1, {fontSize: '32px', fill: '#fff'});
         this.score2Text = this.game.add.text(980, 10, this.score2, {fontSize: '32px', fill: '#fff'});
 
-
-        // PLAYER 2 FINISH.
+        this.player2.life = 3;
+        this.player.life = 3;
 
     },
 
@@ -283,16 +272,20 @@ theGame.prototype = {
                 star.animations.play("wobble");
 
                 this.shoot.play();
+                if (this.player.charge == -1) {
+                    this.player.animations.play('fire_b');
+                } else {
+                    this.player.animations.play('fire_r');
+                }
+                this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
 
                 if (direction != 0) {
                     star.body.velocity.x = 1000 * direction;
                 }
 
                 star.body.gravity.y = 0;
-
-                
-
                 star.from = "Player 1";
+
             }
         }
 
@@ -365,8 +358,16 @@ theGame.prototype = {
                     console.log("shoot RIGHT");
                 }
 
+                if (this.player2.charge == 1) {
+                    this.player2.frame = 20;
+                }
                 this.shoot.play();
-
+                if (this.player2.charge == 1) {
+                    this.player2.animations.play('fire_r');
+                } else {
+                    this.player2.animations.play('fire_b');
+                }
+                this.player2.animations.currentAnim.onComplete.add(this.p2FireComplete, this);
 
                 if (direction != 0) {
                     star.body.velocity.x = 1000 * direction;
@@ -379,33 +380,27 @@ theGame.prototype = {
                 star.from = "Player 2";
 
                 
+
             }
         }
 
         
-        this.game.physics.arcade.collide(this.player, stars, this.collectStar, null, this);
-        this.game.physics.arcade.collide(this.player2, stars, this.collectStar, null, this);
-
-
-        console.log("11 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
+        this.game.physics.arcade.overlap(this.player, stars, this.collectStar, null, this);
+        this.game.physics.arcade.overlap(this.player2, stars, this.collectStar, null, this);
 
         this.platforms.forEach(this.checkAttracion, this, true, this.player);
-        console.log("22 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
 
         this.platforms.forEach(this.checkAttracion, this, true, this.player2);
 
 
         this.player.magneticVelocityY = this.player.body.velocity.y;
         this.player.magneticVelocityX = this.player.body.velocity.x;
-        console.log("33 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
 
         this.game.physics.arcade.collide(this.player, this.platforms, this.collidePlatform, null, this);
-        console.log("44 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
 
         this.player2.magneticVelocityY = this.player2.body.velocity.y;
         this.player2.magneticVelocityX = this.player2.body.velocity.x;
         this.game.physics.arcade.collide(this.player2, this.platforms, this.collidePlatform, null, this);
-        console.log("55 X " + this.player.body.velocity.x + " Y: " + this.player.body.velocity.y);
 
     },
 
@@ -417,24 +412,38 @@ theGame.prototype = {
         if (star.from === player.name){
             return;
         }
-        else{
-        star.kill();
-        this.atom_hit.play();
-        player.charge *= -1;
-        if (player.name == "Player 2") {
-            if (player.charge == 1) {
-                player.animations.play('idle_r');
+        else {
+            star.kill();
+            this.atom_hit.play();
+            player.charge *= -1;
+            if (player.name == "Player 2") {
+                if (player.charge == 1) {
+                    player.animations.play('idle_r');
+                } else {
+                    player.animations.play('idle_b');
+                }
             } else {
-                player.animations.play('idle_b');
+                if (player.charge == 1) {
+                    player.animations.play('idle_r');
+                } else {
+                    player.animations.play('idle_b');
+                }
             }
-        } else {
-            if (player.charge == 1) {
-                player.animations.play('idle_r');
+
+        }
+
+
+        player.life--;
+        console.log("life: " + player.life);
+        if (player.life <= 0) {
+            if (player.name == "Player 1") {
+                this.score(this.player);
             } else {
-                player.animations.play('idle_b');
+                this.score(this.player2);
             }
         }
-        }
+
+
     },
 
     changePlatform: function (platform, star) {
@@ -470,14 +479,14 @@ theGame.prototype = {
         if (playerX <= (platformX + platformW) && platformX <=(playerX + playerW)) {
             if (Math.abs(playerY - platformY) < 200) {
                 affectsV = true;
-                distanceV = 50;
+                distanceV = 100;
             }
         }
 
         if (playerY <= (platformY + platformH) && platformY <=(playerY + playerH)) {
             if (Math.abs(playerX - platformX) < 200) {
                 affectsH = true;
-                distanceH = 50;
+                distanceH = 100;
 
             }
         }
@@ -523,10 +532,6 @@ theGame.prototype = {
     },
 
     collidePlatform: function (player, platform) {
-
-        if (player.name == "Player 1") {
-            console.log("conlide");
-        }
 
         if (player.charge != platform.charge) {
 
@@ -600,6 +605,8 @@ theGame.prototype = {
         this.player.charge = -1;
         this.player.animations.play('idle_b');
 
+        this.player.life = 3;
+        this.player2.life = 3;
 
         this.player2.x = 150;
         this.player2.y = 80;
@@ -612,5 +619,22 @@ theGame.prototype = {
     backToTitle: function () {
         this.gameMusic.stop();
         this.game.state.start("GameTitle");
+    },
+
+    p1FireComplete: function() {
+
+        if (this.player.charge == 1) {
+            this.player.animations.play('idle_r');
+        } else {
+            this.player.animations.play('idle_b');
+        }
+    },
+    p2FireComplete: function() {
+
+        if (this.player2.charge == 1) {
+            this.player2.animations.play('idle_r');
+        } else {
+            this.player2.animations.play('idle_b');
+        }
     }
 }
