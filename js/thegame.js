@@ -23,55 +23,58 @@ theGame.prototype = {
 
         //  Now let's create two ledges
 
-        var ledge = platforms.create(170, 10, 'ground');
+        var ledge = platforms.create(170, 10, 'platform2');
         ledge.body.immovable = true;
         ledge.charge = 1;
         ledge.scale.setTo(0.3, 0.5);
 
-        ledge = platforms.create(800, 10, 'ground');
+        ledge = platforms.create(800, 10, 'platform2');
         ledge.body.immovable = true;
         ledge.charge = 1;
         ledge.scale.setTo(0.3, 0.5);
 
-        ledge = platforms.create(480, 20, 'ground');
+        ledge = platforms.create(480, 20, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = 1;
-        ledge.scale.setTo(0.05, 3);
+        ledge.scale.setTo(0.5, 0.5);
 
-        ledge = platforms.create(480, 480, 'ground');
+        
+        ledge = platforms.create(480, 480, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = 1;
-        ledge.scale.setTo(0.05, 3);
+        ledge.scale.setTo(0.5, 0.5);
 
-        ledge = platforms.create(100, 580, 'ground');
+        //abajo horiz
+        ledge = platforms.create(100, 580, 'platform3');
         ledge.body.immovable = true;
         ledge.charge = 1;
         ledge.scale.setTo(0.3, 0.5);
 
-        ledge = platforms.create(800, 580, 'ground');
+        //abajo horiz
+        ledge = platforms.create(800, 580, 'platform3');
         ledge.body.immovable = true;
         ledge.charge = 1;
         ledge.scale.setTo(0.3, 0.5);
 
-        ledge = platforms.create(20, 430, 'ground');
+        ledge = platforms.create(20, 430, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = 1;
-        ledge.scale.setTo(0.05, 3);
+        ledge.scale.setTo(0.5, 0.5);
 
-        ledge = platforms.create(20, 80, 'ground');
+        ledge = platforms.create(20, 80, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = 1;
-        ledge.scale.setTo(0.05, 3);
+        ledge.scale.setTo(0.5, 0.5);
 
-        ledge = platforms.create(980, 430, 'ground');
+        ledge = platforms.create(980, 430, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = 1;
-        ledge.scale.setTo(0.05, 3);
+        ledge.scale.setTo(0.5, 0.5);
 
-        ledge = platforms.create(980, 80, 'ground');
+        ledge = platforms.create(980, 80, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = 1;
-        ledge.scale.setTo(0.05, 3);
+        ledge.scale.setTo(0.5, 0.5);
 
         return platforms;
     },
@@ -236,7 +239,7 @@ theGame.prototype = {
                     console.log("shoot UP");
                 }
                 else if (cursors.left.isDown) {
-                    var star = stars.create(this.player.body.x + (20 * direction), this.player.body.y + 15, 'stabulletr');
+                    var star = stars.create(this.player.body.x + (20 * direction), this.player.body.y + 15, 'bullet');
                     console.log("shoot LEFT");
                 }
                 else if (cursors.right.isDown) {
@@ -282,45 +285,45 @@ theGame.prototype = {
 
 
                 if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-                    var star = stars.create(player.body.x + (50 * direction) + 30, player.body.y + 40, 'star');
+                    var star = stars.create(this.player2.body.x + (50 * direction) + 30, this.player2.body.y + 40, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-                    var star = stars.create(player.body.x + (80 * direction), player.body.y + 40, 'star');
+                    var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y + 40, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("SHOOT DOWN RIGHT")
                 }
-                // TE HAS QUEDADO AQUI!
+                
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-                    var star = stars.create(player.body.x + (50 * direction) + 30, player.body.y, 'star');
+                    var star = stars.create(this.player2.body.x + (50 * direction) + 30, this.player2.body.y, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-                    var star = stars.create(player.body.x + (80 * direction), player.body.y, 'star');
+                    var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("SHOOT UP RIGHT")
                 }
 
-                // TTE QUEDASTE QUI!
+                
 
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S)) {
-                    var star = stars.create(player.body.x + (40 * direction) + 25, player.body.y + 60, 'star');
+                    var star = stars.create(this.player2.body.x + (40 * direction) + 25, this.player2.body.y + 60, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("shoot DOWN");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-                    var star = stars.create(player.body.x + (40 * direction) + 25, player.body.y - 20, 'star');
+                    var star = stars.create(this.player2.body.x + (40 * direction) + 25, this.player2.body.y - 20, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("shoot UP");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-                    var star = stars.create(player.body.x + (20 * direction), player.body.y + 15, 'star');
+                    var star = stars.create(this.player2.body.x + (20 * direction), this.player2.body.y + 15, 'bullet');
                     console.log("shoot LEFT");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-                    var star = stars.create(player.body.x + (80 * direction), player.body.y + 15, 'star');
+                    var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y + 15, 'bullet');
                     console.log("shoot RIGHT");
                 }
                 

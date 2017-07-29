@@ -8,9 +8,9 @@ preload.prototype = {
         this.game.load.spritesheet('bullet', 'assets/bullet.png', 8, 8);
         this.game.load.spritesheet('atom', 'assets/atom.png', 98, 78);
         this.game.load.spritesheet('atom2', 'assets/atom2.png', 98, 78);
-        this.game.load.spritesheet('platform1', 'assets/platform1_bNr', 400, 45);
-        this.game.load.spritesheet('platform2', 'assets/platform2_bNr', 400, 119);
-        this.game.load.spritesheet('platform3', 'assets/platform3_bNr', 400, 137);
+        this.game.load.spritesheet('platform1', 'assets/platform1Rotated.png', 45, 400);
+        this.game.load.spritesheet('platform2', 'assets/platform2.png', 400, 119);
+        this.game.load.spritesheet('platform3', 'assets/platform3.png', 400, 137);
 
         this.game.load.audio('menu', 'assets/audio/menu.mp3');
         this.game.load.audio('game', 'assets/audio/game.mp3');
