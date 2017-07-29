@@ -23,48 +23,8 @@ theGame.prototype = {
         platforms.enableBody = true;
 
         
-
-        var ledge = platforms.create(150, 10, 'platform2');
-        ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
-        ledge.scale.setTo(0.3, 0.5);
-
-        ledge = platforms.create(860, 10, 'platform2');
-        ledge.body.immovable = true;
-        ledge.charge = 1;
-        ledge.frame = 1;
-        ledge.scale.setTo(0.3, 0.5);
-
-        ledge = platforms.create(480, -60, 'platform1');
-        ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
-        ledge.scale.setTo(0.5, 0.5);
-
-
-        ledge = platforms.create(480, 480, 'platform1');
-        ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
-        ledge.scale.setTo(0.5, 0.5);
-
-        
-        ledge = platforms.create(45, 580, 'platform3');
-        ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
-        ledge.scale.setTo(0.3, 0.5);
-
-        
-        ledge = platforms.create(800, 580, 'platform3');
-        ledge.body.immovable = true;
-        ledge.charge = 1;
-        ledge.frame = 1;
-        ledge.scale.setTo(0.3, 0.5);
-        ledge.bounciness = 0;
-
-        ledge = platforms.create(20, 430, 'platform1');
+        //Laterales:
+        var ledge = platforms.create(20, 430, 'platform1');
         ledge.body.immovable = true;
         ledge.charge = -1;
         ledge.frame = 0;
@@ -87,6 +47,122 @@ theGame.prototype = {
         ledge.charge = 1;
         ledge.frame = 1;
         ledge.scale.setTo(0.5, 0.5);
+        //Arriba:
+
+        ledge = platforms.create(50, 20, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(180, 20, 'platform2');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(310, 20, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(440, 20, 'platform2');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(570, 20, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(700, 20, 'platform2');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(830, 20, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        //Abajo:
+
+        ledge = platforms.create(830, 560, 'platform2');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(700, 560, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(570, 560, 'platform2');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(440, 560, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(310, 560, 'platform2');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(180, 560, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(50, 560, 'platform2');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        //Medio:
+            //Verticales centrales:
+        ledge = platforms.create(500, 440, 'platform1');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+
+        ledge = platforms.create(500, 60, 'platform1');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.3, 0.3);
+            //Horizontales medios:
+
+        ledge = platforms.create(675, 330, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = 1;
+        ledge.frame = 1;
+        ledge.scale.setTo(0.2, 0.2);
+
+        ledge = platforms.create(200, 330, 'platform3');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.2, 0.2);
+
+
 
 
         return platforms;
