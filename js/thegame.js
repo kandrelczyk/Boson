@@ -153,7 +153,7 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(700, 500, 'atom2');
+        this.player2 = this.game.add.sprite(80, 120, 'atom2');
 
 
         this.player2.charge = 1;
