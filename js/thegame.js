@@ -326,12 +326,12 @@ theGame.prototype = {
                     var star = stars.create(player.body.x + (80 * direction), player.body.y + 15, 'star');
                     console.log("shoot RIGHT");
                 }
-                
 
 
-                
-                
-                
+
+
+
+
 
                 if (direction != 0) {
                     star.body.velocity.x = 300 * direction;
@@ -378,10 +378,18 @@ theGame.prototype = {
         star.kill();
 
         player.charge *= -1;
-        if (player.charge == 1) {
-            player.animations.play('idle_b');
+        if (player.name == "Player 2") {
+            if (player.charge == 1) {
+                player.animations.play('idle_b');
+            } else {
+                player.animations.play('idle_r');
+            }
         } else {
-            player.animations.play('idle_r');
+            if (player.charge == 1) {
+                player.animations.play('idle_r');
+            } else {
+                player.animations.play('idle_r');
+            }
         }
 
     },
@@ -407,16 +415,21 @@ theGame.prototype = {
 
         var affectsV = false;
         var affectsH = false;
+        var distanceV = 0;
+        var distanceH = 0;
 
         if (playerX <= (platformX + platformW) && platformX <=(playerX + playerW)) {
-            if (Math.abs(playerY - platformY) < 150) {
+            if (Math.abs(playerY - platformY) < 100) {
                 affectsV = true;
+                distanceV = Math.abs(200/(playerY - platformY));
             }
         }
 
         if (playerY <= (platformY + platformH) && platformY <=(playerY + playerH)) {
-            if (Math.abs(playerX - platformX) < 150) {
+            if (Math.abs(playerX - platformX) < 100) {
                 affectsH = true;
+                distanceH = Math.abs(200/(playerX - platformX));
+
             }
         }
 
@@ -425,19 +438,19 @@ theGame.prototype = {
             if (platform.charge != player.charge) {
                 if (playerY >= platformY) {
                     console.log("attract Y -")
-                    player.body.velocity.y = -50;
+                    player.body.velocity.y += -distanceV;
                 } else {
                     console.log("attract Y +")
-                    player.body.velocity.y = 50;
+                    player.body.velocity.y += distanceV;
                 }
 
             } else {
                 if (playerY >= platformY) {
                     console.log("repeal Y +")
-                    player.body.velocity.y = 50;
+                    player.body.velocity.y += distanceV;
                 } else {
                     console.log("repeal Y -")
-                    player.body.velocity.y = -50;
+                    player.body.velocity.y += -distanceV;
                 }
             }
           //  console.log("p: " + playerY + " plat: " + platformY + " vel " + player.body.velocity.y);
@@ -448,21 +461,21 @@ theGame.prototype = {
             if (platform.charge != player.charge) {
                 if (playerX >= platformX) {
                     console.log("attract X -")
-                    player.body.velocity.x = -50;
+                    player.body.velocity.x += -distanceH;
                 } else {
                     console.log("attract X +")
-                    player.body.velocity.x = 50;
+                    player.body.velocity.x += distanceH;
                 }
 
             } else {
                 if (playerX >= platformX) {
                     console.log("repeal X +")
 
-                    player.body.velocity.x = 50;
+                    player.body.velocity.x += distanceH;
                 } else {
                     console.log("repeal X -")
 
-                    player.body.velocity.x = -50;
+                    player.body.velocity.x += -distanceH;
                 }
             }
           //  console.log("Hplatform: x " + platformX + " y" + platformY + " wid " + platformW + " hei" + platformH);
