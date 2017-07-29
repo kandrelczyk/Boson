@@ -10,7 +10,7 @@ preload.prototype = {
 
         this.game.load.audio('menu', 'assets/audio/menu.mp3');
         this.game.load.audio('game', 'assets/audio/game.mp3');
-
+        this.game.load.image('verticalground', 'assets/verticalplatform.png');
     },
 
     create: function(){
