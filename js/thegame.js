@@ -88,10 +88,12 @@ theGame.prototype = {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         //  A simple background for our game
-       // this.game.add.sprite('sky');
+        var bg = this.game.add.sprite(0, 0, 'background');
+        bg.scale.setTo(1, 0.7)
+        var tween = this.game.add.tween(bg);
+        tween.to({ x: -29000 }, 500000, 'Linear', true, 0);
+
         this.platforms = this.createPlatforms();
-
-
         // The player and its settings
         this.player = this.game.add.sprite(810, 500, 'atom');
         this.player.charge = -1;
@@ -129,7 +131,7 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(200, 50, 'atom2');
+        this.player2 = this.game.add.sprite(150, 50, 'atom2');
 
 
         this.player2.charge = -1;
@@ -172,12 +174,6 @@ theGame.prototype = {
         this.score1Text.setText(this.score1);
         this.score2Text.setText(this.score2);
 
-
-        if (this.player.body.y > this.game.world.height) {
-            this.game.add.text(this.game.world.width / 2, this.game.world.height / 2, 'Game Over', {fontSize: '32px', fill: '#000'});
-            this.game.state.start("GameTitle",true,false);
-        }
-
         //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
         this.game.physics.arcade.overlap(this.player, stars, this.collectStar, null, this);
         this.game.physics.arcade.overlap(this.platforms, stars, this.changePlatform, null, this);
@@ -206,46 +202,50 @@ theGame.prototype = {
                 //  Let gravity do its thing
                 
 
-
+                var star;
                 if (cursors.down.isDown && cursors.left.isDown) {
-                    var star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y + 40, 'bullet');
+                    star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y + 40, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (cursors.down.isDown && cursors.right.isDown) {
-                    var star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 40, 'bullet');
+                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 40, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("SHOOT DOWN RIGHT")
                 }
                 else if (cursors.up.isDown && cursors.left.isDown) {
-                    var star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y, 'bullet');
+                    star = stars.create(this.player.body.x + (50 * direction) + 30, this.player.body.y, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (cursors.up.isDown && cursors.right.isDown) {
-                    var star = stars.create(this.player.body.x + (80 * direction), this.player.body.y, 'bullet');
+                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("SHOOT UP RIGHT")
                 }
 
                 else if (cursors.down.isDown) {
-                    var star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y + 60, 'bullet');
+                    star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y + 60, 'bullet');
                     star.body.velocity.y = 300;
                     console.log("shoot DOWN");
                 }
                 else if (cursors.up.isDown) {
-                    var star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y - 20, 'bullet');
+                    star = stars.create(this.player.body.x + (40 * direction) + 25, this.player.body.y - 20, 'bullet');
                     star.body.velocity.y = -300;
                     console.log("shoot UP");
                 }
                 else if (cursors.left.isDown) {
                     var star = stars.create(this.player.body.x + (20 * direction), this.player.body.y + 15, 'bullet');
+
                     console.log("shoot LEFT");
                 }
                 else if (cursors.right.isDown) {
-                    var star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 15, 'bullet');
+                    star = stars.create(this.player.body.x + (80 * direction), this.player.body.y + 15, 'bullet');
                     console.log("shoot RIGHT");
                 }
+
+                star.animations.add('wobble', [0,2,4], 10, true);
+                star.animations.play("wobble");
 
                 if (direction != 0) {
                     star.body.velocity.x = 300 * direction;
@@ -326,12 +326,12 @@ theGame.prototype = {
                     var star = stars.create(this.player2.body.x + (80 * direction), this.player2.body.y + 15, 'bullet');
                     console.log("shoot RIGHT");
                 }
-                
 
 
-                
-                
-                
+
+
+
+
 
                 if (direction != 0) {
                     star.body.velocity.x = 300 * direction;
@@ -378,10 +378,18 @@ theGame.prototype = {
         star.kill();
 
         player.charge *= -1;
-        if (player.charge == 1) {
-            player.animations.play('idle_b');
+        if (player.name == "Player 2") {
+            if (player.charge == 1) {
+                player.animations.play('idle_b');
+            } else {
+                player.animations.play('idle_r');
+            }
         } else {
-            player.animations.play('idle_r');
+            if (player.charge == 1) {
+                player.animations.play('idle_r');
+            } else {
+                player.animations.play('idle_r');
+            }
         }
 
     },
@@ -407,16 +415,21 @@ theGame.prototype = {
 
         var affectsV = false;
         var affectsH = false;
+        var distanceV = 0;
+        var distanceH = 0;
 
         if (playerX <= (platformX + platformW) && platformX <=(playerX + playerW)) {
-            if (Math.abs(playerY - platformY) < 150) {
+            if (Math.abs(playerY - platformY) < 100) {
                 affectsV = true;
+                distanceV = Math.abs(200/(playerY - platformY));
             }
         }
 
         if (playerY <= (platformY + platformH) && platformY <=(playerY + playerH)) {
-            if (Math.abs(playerX - platformX) < 150) {
+            if (Math.abs(playerX - platformX) < 100) {
                 affectsH = true;
+                distanceH = Math.abs(200/(playerX - platformX));
+
             }
         }
 
@@ -424,48 +437,38 @@ theGame.prototype = {
 
             if (platform.charge != player.charge) {
                 if (playerY >= platformY) {
-                    console.log("attract Y -")
-                    player.body.velocity.y = -50;
+                    player.body.velocity.y += -distanceV;
                 } else {
-                    console.log("attract Y +")
-                    player.body.velocity.y = 50;
+                    player.body.velocity.y += distanceV;
                 }
 
             } else {
                 if (playerY >= platformY) {
-                    console.log("repeal Y +")
-                    player.body.velocity.y = 50;
+                    player.body.velocity.y += distanceV;
                 } else {
-                    console.log("repeal Y -")
-                    player.body.velocity.y = -50;
+                    player.body.velocity.y += -distanceV;
                 }
             }
-          //  console.log("p: " + playerY + " plat: " + platformY + " vel " + player.body.velocity.y);
 
         }
 
         if (affectsH) {
             if (platform.charge != player.charge) {
                 if (playerX >= platformX) {
-                    console.log("attract X -")
-                    player.body.velocity.x = -50;
+                    player.body.velocity.x += -distanceH;
                 } else {
-                    console.log("attract X +")
-                    player.body.velocity.x = 50;
+                    player.body.velocity.x += distanceH;
                 }
 
             } else {
                 if (playerX >= platformX) {
-                    console.log("repeal X +")
 
-                    player.body.velocity.x = 50;
+                    player.body.velocity.x += distanceH;
                 } else {
-                    console.log("repeal X -")
 
-                    player.body.velocity.x = -50;
+                    player.body.velocity.x += -distanceH;
                 }
             }
-          //  console.log("Hplatform: x " + platformX + " y" + platformY + " wid " + platformW + " hei" + platformH);
         }
 
     },
