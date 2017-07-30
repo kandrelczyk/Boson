@@ -309,7 +309,7 @@ theGame.prototype = {
         this.game.physics.arcade.overlap(this.platforms, stars, this.changePlatform, null, this);
 
        
-
+        //PLAYER 1 CONTROL KEYBOARD
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT) && this.lastShot < (Date.now() - 500)) {
             
 
@@ -397,7 +397,7 @@ theGame.prototype = {
 
 
 
-
+        //PLAYER2 CONTROLS KEYBOARD
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.ALT) && this.lastShot2 < (Date.now() - 500)) {
             
 
@@ -523,6 +523,10 @@ theGame.prototype = {
             this.game.physics.arcade.enable(particle);
             //particle.enableBody = true;
             particle.body.velocity.x = star.body.velocity.x;
+            if (star.body.velocity.x = 0)
+            {
+                particle.body.velocity = 500;
+            }
             particle.body.velocity.y = 1000 * (Math.random() < 0.5 ? -1 : 1);
 
             star.kill();
