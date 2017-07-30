@@ -1,7 +1,6 @@
 var theGame = function(game) {
 
     this.lastShot = 0;
-
     this.lastShot2 = 0;
 
     this.score1 = 0;
@@ -148,21 +147,6 @@ theGame.prototype = {
         ledge.charge = -1;
         ledge.frame = 0;
         ledge.scale.setTo(0.3, 0.3);
-            //Horizontales medios:
-
-        ledge = platforms.create(675, 330, 'platform3');
-        ledge.body.immovable = true;
-        ledge.charge = 1;
-        ledge.frame = 1;
-        ledge.scale.setTo(0.2, 0.2);
-
-        ledge = platforms.create(200, 330, 'platform3');
-        ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
-        ledge.scale.setTo(0.2, 0.2);
-
-
 
 
         return platforms;
@@ -268,6 +252,9 @@ theGame.prototype = {
 
         this.player2.life = 3;
         this.player.life = 3;
+
+        this.score1 = 0;
+        this.score2 = 0;
 
     },
 

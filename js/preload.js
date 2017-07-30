@@ -15,6 +15,8 @@ preload.prototype = {
 
         this.game.load.audio('menu', 'assets/audio/menu.mp3');
         this.game.load.audio('explode', 'assets/audio/explode.mp3');
+        this.game.load.audio('fight', 'assets/audio/fight.mp3');
+        this.game.load.audio('attraction', 'assets/audio/attraction.mp3');
         this.game.load.audio('game', 'assets/audio/game.mp3');
         this.game.load.audio('death', 'assets/audio/death.mp3');
         this.game.load.audio('shoot', 'assets/audio/shoot.mp3');

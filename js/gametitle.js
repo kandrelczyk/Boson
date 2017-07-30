@@ -10,11 +10,13 @@ gameTitle.prototype = {
         playButton.scale.setTo(0.4, 0.4);
 
         this.menuMusic = this.game.add.audio('menu');
+        this.fightSnd = this.game.add.audio('fight');
         this.menuMusic.loopFull();
     },
 
     playTheGame: function(){
         this.menuMusic.stop();
+        this.fightSnd.play();
         this.game.state.start("TheGame");
     }
 }
