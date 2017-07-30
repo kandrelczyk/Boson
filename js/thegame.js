@@ -66,8 +66,8 @@ theGame.prototype = {
 
         ledge = platforms.create(640, 20, 'platformFloorRoof');
         ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
+        ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.8, 0.8);
 /*
         ledge = platforms.create(50, 20, 'platform3');
@@ -122,14 +122,14 @@ theGame.prototype = {
 
         ledge = platforms.create(390, 560, 'platformFloorRoof');
         ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
+        ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.6, 0.6);
 
         ledge = platforms.create(640, 560, 'platformFloorRoof');
         ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
+        ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.8, 0.8);
 
 /*
@@ -179,8 +179,8 @@ theGame.prototype = {
             //Verticales centrales:
         ledge = platforms.create(500, 440, 'platform1');
         ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
+        ledge.charge = 1;
+        ledge.frame = 1;
         ledge.scale.setTo(0.3, 0.3);
 
         ledge = platforms.create(500, 60, 'platform1');
@@ -213,13 +213,13 @@ theGame.prototype = {
 
         //  A simple background for our game
         var bg = this.game.add.sprite(0, 0, 'background');
-        bg.scale.setTo(2.5, 2.5)
+        bg.scale.setTo(1, 1)
         var tween = this.game.add.tween(bg);
         tween.to({ x: -29000 }, 500000, 'Linear', true, 0);
 
         this.platforms = this.createPlatforms();
         // The player and its settings
-        this.player = this.game.add.sprite(800, 480, 'atom');
+        this.player = this.game.add.sprite(860, 480, 'atom');
         this.player.charge = -1;
         this.player.checkWorldBounds = true;
         this.player.events.onOutOfBounds.add(this.score, this);
@@ -259,7 +259,7 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(80, 120, 'atom2');
+        this.player2 = this.game.add.sprite(60, 70, 'atom2');
 
 
         this.player2.charge = 1;
@@ -338,7 +338,7 @@ theGame.prototype = {
         if ((this.pad1.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad1.justPressed(Phaser.Gamepad.XBOX360_B) ||
             this.pad1.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad1.justPressed(Phaser.Gamepad.XBOX360_Y)) &&
             (this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) != 0 || this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) != 0) &&
-             this.lastShot < (Date.now() - 500))
+             this.lastShot < (Date.now() - 600))
 
         {
             this.lastShot = Date.now();
@@ -369,7 +369,7 @@ theGame.prototype = {
         if ((this.pad2.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad2.justPressed(Phaser.Gamepad.XBOX360_B) ||
             this.pad2.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad2.justPressed(Phaser.Gamepad.XBOX360_Y)) &&
             (this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) != 0 || this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) != 0) &&
-             this.lastShot2 < (Date.now() - 500))
+             this.lastShot2 < (Date.now() - 600))
             //this.pad3.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad3.justPressed(Phaser.Gamepad.XBOX360_B) ||
            // this.pad3.justPressed(Phaser.Gamepad.XBOX360_X) || this.pad3.justPressed(Phaser.Gamepad.XBOX360_Y) ||
 
@@ -413,7 +413,7 @@ theGame.prototype = {
 
 
 
-        if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT) && this.lastShot < (Date.now() - 500)) {
+        if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT) && this.lastShot < (Date.now() - 600)) {
             
 
 
@@ -501,7 +501,7 @@ theGame.prototype = {
 
 
         //PLAYER2 CONTROLS KEYBOARD
-        if (this.game.input.keyboard.isDown(Phaser.Keyboard.ALT) && this.lastShot2 < (Date.now() - 500)) {
+        if (this.game.input.keyboard.isDown(Phaser.Keyboard.ALT) && this.lastShot2 < (Date.now() - 600)) {
             
 
 
@@ -841,8 +841,8 @@ theGame.prototype = {
         this.platforms.callAll('kill');
         this.platforms = this.createPlatforms();
 
-        this.player.x = 820;
-        this.player.y = 500;
+        this.player.x = 860;
+        this.player.y = 480;
         this.player.body.velocity.setTo(0, 0);
         this.player.charge = -1;
         this.player.animations.play('idle_b');
@@ -851,8 +851,8 @@ theGame.prototype = {
         this.player.life = 3;
         this.player2.life = 3;
 
-        this.player2.x = 150;
-        this.player2.y = 80;
+        this.player2.x = 60;
+        this.player2.y = 70;
         this.player2.body.velocity.setTo(0, 0);
         this.player2.charge = 1;
         this.player2.animations.play('idle_r');
