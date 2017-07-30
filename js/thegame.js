@@ -322,7 +322,7 @@ theGame.prototype = {
 
 
 
-
+        //CONTROLS PAD PLAYER 1
         if (this.pad1.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad1.justPressed(Phaser.Gamepad.XBOX360_B) ||
             this.pad1.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad1.justPressed(Phaser.Gamepad.XBOX360_Y))
         {
@@ -344,6 +344,48 @@ theGame.prototype = {
 
             star.body.gravity.y = 0;
             star.from = "Player 1";
+        }
+
+
+        //CONTROLS PAD PLAYER 2
+        if (this.pad2.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad2.justPressed(Phaser.Gamepad.XBOX360_B) ||
+            this.pad2.justPressed(Phaser.Gamepad.XBOX360_X) || this.pad2.justPressed(Phaser.Gamepad.XBOX360_Y) ||
+
+            this.pad3.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad3.justPressed(Phaser.Gamepad.XBOX360_B) ||
+            this.pad3.justPressed(Phaser.Gamepad.XBOX360_X) || this.pad3.justPressed(Phaser.Gamepad.XBOX360_Y) ||
+
+            this.pad4.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad4.justPressed(Phaser.Gamepad.XBOX360_B) ||
+            this.pad4.justPressed(Phaser.Gamepad.XBOX360_X) || this.pad4.justPressed(Phaser.Gamepad.XBOX360_Y))
+        {
+            var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
+            star.animations.add('wobble', [0,2,4], 10, true);
+            star.animations.play("wobble");
+
+            this.shoot.play();
+            if (this.player.charge == -1) {
+                this.player.animations.play('fire_b');
+            } else {
+                this.player.animations.play('fire_r');
+            }
+            this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
+
+
+            star.body.velocity.x = 1000 * this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+            star.body.velocity.y = 1000 * this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+            if(star.body.velocity.x === 0 && star.body.velocity.y === 0) {
+                star.body.velocity.x = 1000 * this.pad3.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+                star.body.velocity.y = 1000 * this.pad3.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+            }
+            else if (star.body.velocity.x === 0 && star.body.velocity.y === 0){
+                star.body.velocity.x = 1000 * this.pad4.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+                star.body.velocity.y = 1000 * this.pad4.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+            }
+
+            
+
+
+            star.body.gravity.y = 0;
+            star.from = "Player 2";
         }
 
 
@@ -559,12 +601,8 @@ theGame.prototype = {
 
             var particle = this.game.add.sprite(player.body.x + 30, player.body.y + 30, 'bullet');
             this.game.physics.arcade.enable(particle);
-            //particle.enableBody = true;
-            particle.body.velocity.x = star.body.velocity.x;
-            if (star.body.velocity.x = 0)
-            {
-                particle.body.velocity = 500;
-            }
+            
+            particle.body.velocity.x = star.body.velocity.x + 500;
             particle.body.velocity.y = 1000 * (Math.random() < 0.5 ? -1 : 1);
 
             star.kill();
