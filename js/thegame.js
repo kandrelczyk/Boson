@@ -259,7 +259,7 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(80, 120, 'atom2');
+        this.player2 = this.game.add.sprite(450, 450, 'atom2');
 
 
         this.player2.charge = 1;
@@ -302,19 +302,25 @@ theGame.prototype = {
         this.score2 = 0;
 
         this.game.input.gamepad.start();
-
-        // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
         this.pad1 = this.game.input.gamepad.pad1;
         this.pad2 = this.game.input.gamepad.pad2;
-        this.pad3 = this.game.input.gamepad.pad3;
-        this.pad4 = this.game.input.gamepad.pad4;
+
+
+
+
+        var shootVel = 400;
+
+
+
+        this.emitter = this.game.add.emitter(0, 0, 10);
+
+        this.emitter.makeParticles('bullet');
+        this.emitter.gravity = 0;
+
 
     },
 
     update: function () {
-
-        var shootVel = 400;
-
 
         this.score1Text.setText(this.score1);
         this.score2Text.setText(this.score2);
@@ -322,9 +328,6 @@ theGame.prototype = {
         
         this.game.physics.arcade.overlap(this.player, stars, this.collectStar, null, this);
         this.game.physics.arcade.overlap(this.platforms, stars, this.changePlatform, null, this);
-
-
-
 
 
         //CONTROLS PAD PLAYER 1
@@ -772,9 +775,16 @@ theGame.prototype = {
             this.explode.play();
             if (this.player2.life == 0) {
                 this.player2.scale.setTo(0);
+                this.emitter.x = this.player2.x;
+                this.emitter.y = this.player2.y;
+
             } else {
                 this.player.scale.setTo(0);
+                this.emitter.x = this.player.x;
+                this.emitter.y = this.player.y;
+
             }
+            this.emitter.start(true, 2000, null, 10);
         }
 
         player.body.velocity.x = 0;
