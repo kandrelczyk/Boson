@@ -8,9 +8,13 @@ var theGame = function(game) {
 
     this.scored = false;
 
+    //this.shootVel = 750;
+
 }
 
 theGame.prototype = {
+
+
 
 
     createPlatforms: function () {
@@ -309,7 +313,7 @@ theGame.prototype = {
 
     update: function () {
 
-
+        var shootVel = 400;
 
 
         this.score1Text.setText(this.score1);
@@ -345,8 +349,8 @@ theGame.prototype = {
             }
             this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
 
-            star.body.velocity.x = 1000 * this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
-            star.body.velocity.y = 1000 * this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+            star.body.velocity.x = shootVel * this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+            star.body.velocity.y = shootVel * this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
 
 
             star.body.gravity.y = 0;
@@ -383,15 +387,15 @@ theGame.prototype = {
             this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
 
 
-            star.body.velocity.x = 1000 * this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
-            star.body.velocity.y = 1000 * this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+            star.body.velocity.x = shootVel * this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+            star.body.velocity.y = shootVel * this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
             if(star.body.velocity.x === 0 && star.body.velocity.y === 0) {
-                star.body.velocity.x = 1000 * this.pad3.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
-                star.body.velocity.y = 1000 * this.pad3.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+                star.body.velocity.x = shootVel * this.pad3.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+                star.body.velocity.y = shootVel * this.pad3.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
             }
             else if (star.body.velocity.x === 0 && star.body.velocity.y === 0){
-                star.body.velocity.x = 1000 * this.pad4.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
-                star.body.velocity.y = 1000 * this.pad4.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+                star.body.velocity.x = shootVel * this.pad4.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+                star.body.velocity.y = shootVel * this.pad4.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
             }
 
             
@@ -427,33 +431,33 @@ theGame.prototype = {
                 var star;
                 if (cursors.down.isDown && cursors.left.isDown) {
                     star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
-                    star.body.velocity.y = 1000;
+                    star.body.velocity.y = shootVel;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (cursors.down.isDown && cursors.right.isDown) {
                     star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
-                    star.body.velocity.y = 1000;
+                    star.body.velocity.y = shootVel;
                     console.log("SHOOT DOWN RIGHT")
                 }
                 else if (cursors.up.isDown && cursors.left.isDown) {
                     star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
-                    star.body.velocity.y = -1000;
+                    star.body.velocity.y = -shootVel;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (cursors.up.isDown && cursors.right.isDown) {
                     star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
-                    star.body.velocity.y = -1000;
+                    star.body.velocity.y = -shootVel;
                     console.log("SHOOT UP RIGHT")
                 }
 
                 else if (cursors.down.isDown) {
                     star = stars.create(this.player.body.x + 35, this.player.body.y + 30, 'bullet');
-                    star.body.velocity.y = 1000;
+                    star.body.velocity.y = shootVel;
                     console.log("shoot DOWN");
                 }
                 else if (cursors.up.isDown) {
                     star = stars.create(this.player.body.x + 35, this.player.body.y + 30, 'bullet');
-                    star.body.velocity.y = -1000;
+                    star.body.velocity.y = -shootVel;
                     console.log("shoot UP");
                 }
                 else if (cursors.left.isDown) {
@@ -478,7 +482,7 @@ theGame.prototype = {
                 this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
 
                 if (direction != 0) {
-                    star.body.velocity.x = 1000 * direction;
+                    star.body.velocity.x = shootVel * direction;
                 }
 
                 star.body.gravity.y = 0;
@@ -515,23 +519,23 @@ theGame.prototype = {
 
                 if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
                     var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
-                    star.body.velocity.y = 1000;
+                    star.body.velocity.y = shootVel;
                     console.log("SHOOT DOWN LEFT")
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
                     var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
-                    star.body.velocity.y = 1000;
+                    star.body.velocity.y = shootVel;
                     console.log("SHOOT DOWN RIGHT")
                 }
                 
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
                     var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
-                    star.body.velocity.y = -1000;
+                    star.body.velocity.y = -shootVel;
                     console.log("SHOOT UP LEFT")
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.input.keyboard.isDown(Phaser.Keyboard.D)) {
                     var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
-                    star.body.velocity.y = -1000;
+                    star.body.velocity.y = -shootVel;
                     console.log("SHOOT UP RIGHT")
                 }
 
@@ -539,12 +543,12 @@ theGame.prototype = {
 
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.S)) {
                     var star = stars.create(this.player2.body.x + 35, this.player2.body.y + 30, 'bullet');
-                    star.body.velocity.y = 1000;
+                    star.body.velocity.y = shootVel;
                     console.log("shoot DOWN");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.W)) {
                     var star = stars.create(this.player2.body.x + 35, this.player2.body.y + 30, 'bullet');
-                    star.body.velocity.y = -1000;
+                    star.body.velocity.y = -shootVel;
                     console.log("shoot UP");
                 }
                 else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
@@ -568,7 +572,7 @@ theGame.prototype = {
                 this.player2.animations.currentAnim.onComplete.add(this.p2FireComplete, this);
 
                 if (direction != 0) {
-                    star.body.velocity.x = 1000 * direction;
+                    star.body.velocity.x = shootVel * direction;
 
                 }
 
@@ -604,7 +608,7 @@ theGame.prototype = {
 
     collectStar: function (player, star){
 
-        
+        var shootVel = 400;
         
 
         if (star.from === player.name){
@@ -616,7 +620,7 @@ theGame.prototype = {
             this.game.physics.arcade.enable(particle);
             
             particle.body.velocity.x = star.body.velocity.x + 500;
-            particle.body.velocity.y = 1000 * (Math.random() < 0.5 ? -1 : 1);
+            particle.body.velocity.y = shootVel * (Math.random() < 0.5 ? -1 : 1);
 
             star.kill();
             this.atom_hit.play();
@@ -666,6 +670,10 @@ theGame.prototype = {
     },
 
     checkAttracion: function (platform, player) {
+        
+        var playerSpeed = 80;
+
+
         var platformW = platform.body.width;
         var platformH = platform.body.height;
         var platformX = platform.body.x;
@@ -684,14 +692,14 @@ theGame.prototype = {
         if (playerX <= (platformX + platformW) && platformX <=(playerX + playerW)) {
             if (Math.abs(playerY - platformY) < 200) {
                 affectsV = true;
-                distanceV = 100;
+                distanceV = playerSpeed;
             }
         }
 
         if (playerY <= (platformY + platformH) && platformY <=(playerY + playerH)) {
             if (Math.abs(playerX - platformX) < 200) {
                 affectsH = true;
-                distanceH = 100;
+                distanceH = playerSpeed;
 
             }
         }
