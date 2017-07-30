@@ -297,9 +297,20 @@ theGame.prototype = {
         this.score1 = 0;
         this.score2 = 0;
 
+        this.game.input.gamepad.start();
+
+        // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
+        this.pad1 = this.game.input.gamepad.pad1;
+        this.pad2 = this.game.input.gamepad.pad2;
+        this.pad3 = this.game.input.gamepad.pad3;
+        this.pad4 = this.game.input.gamepad.pad4;
+
     },
 
     update: function () {
+
+
+
 
         this.score1Text.setText(this.score1);
         this.score2Text.setText(this.score2);
@@ -308,7 +319,32 @@ theGame.prototype = {
         this.game.physics.arcade.overlap(this.player, stars, this.collectStar, null, this);
         this.game.physics.arcade.overlap(this.platforms, stars, this.changePlatform, null, this);
 
-       
+
+
+
+        if (this.pad1.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad1.justPressed(Phaser.Gamepad.XBOX360_B) ||
+            this.pad1.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad1.justPressed(Phaser.Gamepad.XBOX360_Y))
+        {
+            var star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
+            star.animations.add('wobble', [0,2,4], 10, true);
+            star.animations.play("wobble");
+
+            this.shoot.play();
+            if (this.player.charge == -1) {
+                this.player.animations.play('fire_b');
+            } else {
+                this.player.animations.play('fire_r');
+            }
+            this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
+
+            star.body.velocity.x = 1000 * this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X);
+            star.body.velocity.y = 1000 * this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+
+
+            star.body.gravity.y = 0;
+            star.from = "Player 1";
+        }
+
 
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT) && this.lastShot < (Date.now() - 500)) {
             
