@@ -259,7 +259,7 @@ theGame.prototype = {
 
         // The player2 and its settings
 
-        this.player2 = this.game.add.sprite(450, 450, 'atom2');
+        this.player2 = this.game.add.sprite(80, 120, 'atom2');
 
 
         this.player2.charge = 1;
@@ -610,7 +610,14 @@ theGame.prototype = {
         this.player2.magneticVelocityX = this.player2.body.velocity.x;
         this.game.physics.arcade.collide(this.player2, this.platforms, this.collidePlatform, null, this);
 
+        this.game.physics.arcade.collide(this.player, this.player2, this.playerCollision, null, this);
+
     },
+
+    playerCollision: function(player, player2) {
+
+    },
+
 
     collectStar: function (player, star){
 
