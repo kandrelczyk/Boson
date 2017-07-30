@@ -235,11 +235,19 @@ theGame.prototype = {
         this.player.body.gravity.x = 1;
         this.player.body.collideWorldBounds = false;
 
-        //  Our two animations, walking left and right.
-        this.player.animations.add('idle_b', [5, 6, 7, 8, 9, 10, 11, 12], 10, true);
-        this.player.animations.add('idle_r', [13, 14, 15, 16, 17, 18, 19, 20], 10, true);
-        this.player.animations.add('fire_b', [21], 10, false);
-        this.player.animations.add('fire_r', [22], 10, false);
+        this.player.animations.add('idle_b3', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+        this.player.animations.add('idle_r3', [8, 9, 10, 11, 12, 13, 14, 15], 10, true);
+        this.player.animations.add('fire_b3', [16], 10, false);
+        this.player.animations.add('fire_r3', [17], 10, false);
+        this.player.animations.add('idle_b2', [18, 19, 20, 21, 22, 23, 24, 25], 10, true);
+        this.player.animations.add('idle_r2', [26, 27, 28, 29, 30, 31, 32, 33], 10, true);
+        this.player.animations.add('fire_b2', [34], 10, false);
+        this.player.animations.add('fire_r2', [35], 10, false);
+        this.player.animations.add('idle_b1', [36, 37, 38, 39, 40, 41, 42, 43], 10, true);
+        this.player.animations.add('idle_r1', [44, 45, 46, 47, 48, 49, 50, 51], 10, true);
+        this.player.animations.add('fire_b1', [52], 10, false);
+        this.player.animations.add('fire_r1', [53], 10, false);
+
 
         //  Finally some stars to collect
         stars = this.game.add.group();
@@ -247,7 +255,7 @@ theGame.prototype = {
         //  We will enable physics for any star that is created in this group
         stars.enableBody = true;
 
-        this.player.animations.play('idle_b');
+        this.player.animations.play('idle_b3');
 
         this.player.name = 'Player 1';
 
@@ -278,10 +286,18 @@ theGame.prototype = {
         this.player2.body.collideWorldBounds = false;
 
         //  Our two animations, walking left and right.
-        this.player2.animations.add('idle_b', [5, 6, 7, 8, 9, 10, 11, 12], 10, true);
-        this.player2.animations.add('idle_r', [13, 14, 15, 16, 17, 18, 19, 20], 10, true);
-        this.player2.animations.add('fire_b', [21], 10, false);
-        this.player2.animations.add('fire_r', [22], 10, false);
+        this.player2.animations.add('idle_b3', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+        this.player2.animations.add('idle_r3', [8, 9, 10, 11, 12, 13, 14, 15], 10, true);
+        this.player2.animations.add('fire_b3', [16], 10, false);
+        this.player2.animations.add('fire_r3', [17], 10, false);
+        this.player2.animations.add('idle_b2', [18, 19, 20, 21, 22, 23, 24, 25], 10, true);
+        this.player2.animations.add('idle_r2', [26, 27, 28, 29, 30, 31, 32, 33], 10, true);
+        this.player2.animations.add('fire_b2', [34], 10, false);
+        this.player2.animations.add('fire_r2', [35], 10, false);
+        this.player2.animations.add('idle_b1', [36, 37, 38, 39, 40, 41, 42, 43], 10, true);
+        this.player2.animations.add('idle_r1', [44, 45, 46, 47, 48, 49, 50, 51], 10, true);
+        this.player2.animations.add('fire_b1', [52], 10, false);
+        this.player2.animations.add('fire_r1', [53], 10, false);
         this.player2.name = 'Player 2';
 
         //  Finally some stars to collect
@@ -290,7 +306,7 @@ theGame.prototype = {
         //  We will enable physics for any star that is created in this group
         stars.enableBody = true;
 
-        this.player2.animations.play('idle_r');
+        this.player2.animations.play('idle_r3');
 
         this.score1Text = this.game.add.text(20, 10, this.score1, {fontSize: '32px', fill: '#fff'});
         this.score2Text = this.game.add.text(980, 10, this.score2, {fontSize: '32px', fill: '#fff'});
@@ -349,9 +365,9 @@ theGame.prototype = {
 
             this.shoot.play();
             if (this.player.charge == -1) {
-                this.player.animations.play('fire_b');
+                this.player.animations.play('fire_b' + this.player.life);
             } else {
-                this.player.animations.play('fire_r');
+                this.player.animations.play('fire_r'  + this.player.life);
             }
             this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
 
@@ -386,9 +402,9 @@ theGame.prototype = {
 
             this.shoot.play();
             if (this.player.charge == -1) {
-                this.player.animations.play('fire_b');
+                this.player.animations.play('fire_b'  + this.player2.life);
             } else {
-                this.player.animations.play('fire_r');
+                this.player.animations.play('fire_r'  + this.player2.life);
             }
             this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
 
@@ -481,9 +497,9 @@ theGame.prototype = {
 
                 this.shoot.play();
                 if (this.player.charge == -1) {
-                    this.player.animations.play('fire_b');
+                    this.player.animations.play('fire_b' + this.player.life);
                 } else {
-                    this.player.animations.play('fire_r');
+                    this.player.animations.play('fire_r'  + this.player.life);
                 }
                 this.player.animations.currentAnim.onComplete.add(this.p1FireComplete, this);
 
@@ -571,9 +587,9 @@ theGame.prototype = {
                 }
                 this.shoot.play();
                 if (this.player2.charge == 1) {
-                    this.player2.animations.play('fire_r');
+                    this.player2.animations.play('fire_r'  + this.player2.life);
                 } else {
-                    this.player2.animations.play('fire_b');
+                    this.player2.animations.play('fire_b'  + this.player2.life);
                 }
                 this.player2.animations.currentAnim.onComplete.add(this.p2FireComplete, this);
 
@@ -635,28 +651,29 @@ theGame.prototype = {
             particle.body.velocity.x = star.body.velocity.x + 500;
             particle.body.velocity.y = shootVel * (Math.random() < 0.5 ? -1 : 1);
 
+            player.life--;
+
+
             star.kill();
             this.atom_hit.play();
             player.charge *= -1;
             if (player.name == "Player 2") {
                 if (player.charge == 1) {
-                    player.animations.play('idle_r');
+                    player.animations.play('idle_r' + player.life);
                 } else {
-                    player.animations.play('idle_b');
+                    player.animations.play('idle_b' + player.life);
                 }
             } else {
                 if (player.charge == 1) {
-                    player.animations.play('idle_r');
+                    player.animations.play('idle_r' + player.life);
                 } else {
-                    player.animations.play('idle_b');
+                    player.animations.play('idle_b' + player.life);
                 }
             }
 
         }
 
 
-        player.life--;
-        console.log("life: " + player.life);
         if (player.life <= 0) {
             if (player.name == "Player 1") {
                 this.score(this.player);
@@ -845,7 +862,7 @@ theGame.prototype = {
         this.player.y = 500;
         this.player.body.velocity.setTo(0, 0);
         this.player.charge = -1;
-        this.player.animations.play('idle_b');
+        this.player.animations.play('idle_b3');
         this.player.scale.setTo(0.8, 0.8);
 
         this.player.life = 3;
@@ -855,7 +872,7 @@ theGame.prototype = {
         this.player2.y = 80;
         this.player2.body.velocity.setTo(0, 0);
         this.player2.charge = 1;
-        this.player2.animations.play('idle_r');
+        this.player2.animations.play('idle_r3');
         this.player2.scale.setTo(0.8, 0.8);
 
         this.gameMusic.loopFull(0.3);
@@ -871,17 +888,17 @@ theGame.prototype = {
     p1FireComplete: function() {
 
         if (this.player.charge == 1) {
-            this.player.animations.play('idle_r');
+            this.player.animations.play('idle_r' + this.player.life);
         } else {
-            this.player.animations.play('idle_b');
+            this.player.animations.play('idle_b' + this.player.life);
         }
     },
     p2FireComplete: function() {
 
         if (this.player2.charge == 1) {
-            this.player2.animations.play('idle_r');
+            this.player2.animations.play('idle_r' + this.player2.life);
         } else {
-            this.player2.animations.play('idle_b');
+            this.player2.animations.play('idle_b' + this.player2.life);
         }
     }
 }
