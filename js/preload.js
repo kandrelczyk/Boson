@@ -4,7 +4,7 @@ preload.prototype = {
     preload: function(){
         this.game.load.image('gametitle', 'assets/gametitle.png');
         this.game.load.image('play', 'assets/play.png');
-        this.game.load.image('background', 'assets/BACKGROUND_40.png');
+        this.game.load.image('background', 'assets/BACKGROUND_DESATURADO_50.png');
         this.game.load.image('ground', 'assets/platform.png');
         this.game.load.image('credits', 'assets/CREDITOS.png');
         this.game.load.spritesheet('bullet', 'assets/bullet.png', 8, 8);
