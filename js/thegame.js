@@ -328,7 +328,7 @@ theGame.prototype = {
         if ((this.pad1.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad1.justPressed(Phaser.Gamepad.XBOX360_B) ||
             this.pad1.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad1.justPressed(Phaser.Gamepad.XBOX360_Y)) &&
             (this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) != 0 || this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) != 0) &&
-            && this.lastShot < (Date.now() - 500))
+             this.lastShot < (Date.now() - 500))
 
         {
             this.lastShot = Date.now();
@@ -355,17 +355,21 @@ theGame.prototype = {
 
 
         //CONTROLS PAD PLAYER 2
-        if (this.pad2.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad2.justPressed(Phaser.Gamepad.XBOX360_B) ||
-            this.pad2.justPressed(Phaser.Gamepad.XBOX360_X) || this.pad2.justPressed(Phaser.Gamepad.XBOX360_Y)
-
+        
+        if ((this.pad2.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad2.justPressed(Phaser.Gamepad.XBOX360_B) ||
+            this.pad2.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad2.justPressed(Phaser.Gamepad.XBOX360_Y)) &&
+            (this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) != 0 || this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) != 0) &&
+             this.lastShot2 < (Date.now() - 500))
             //this.pad3.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad3.justPressed(Phaser.Gamepad.XBOX360_B) ||
            // this.pad3.justPressed(Phaser.Gamepad.XBOX360_X) || this.pad3.justPressed(Phaser.Gamepad.XBOX360_Y) ||
 
             //this.pad4.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad4.justPressed(Phaser.Gamepad.XBOX360_B) ||
             //this.pad4.justPressed(Phaser.Gamepad.XBOX360_X) || this.pad4.justPressed(Phaser.Gamepad.XBOX360_Y)
-            )
+            
 
         {
+            this.lastShot2 = Date.now();
+
             var star = stars.create(this.player2.body.x + 30, this.player2.body.y + 30, 'bullet');
             star.animations.add('wobble', [0,2,4], 10, true);
             star.animations.play("wobble");
