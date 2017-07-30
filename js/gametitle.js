@@ -16,6 +16,13 @@ gameTitle.prototype = {
         this.game.input.gamepad.start();
         this.pad1 = this.game.input.gamepad.pad1;
         this.pad2 = this.game.input.gamepad.pad2;
+
+        var credits = this.game.add.sprite(this.game.width,this.game.height * 0.8,"credits");
+        credits.scale.setTo(0.2, 0.2);
+        var tween = this.game.add.tween(credits);
+        tween.to({ x: -29000 }, 200000, 'Linear', true, 0);
+
+
     },
 
     update: function() {
