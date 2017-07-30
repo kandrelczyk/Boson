@@ -308,7 +308,7 @@ theGame.prototype = {
 
 
 
-        var shootVel = 400;
+       
 
 
 
@@ -321,6 +321,9 @@ theGame.prototype = {
     },
 
     update: function () {
+
+        var shootVel = 400;
+
 
         this.score1Text.setText(this.score1);
         this.score2Text.setText(this.score2);
