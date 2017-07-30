@@ -49,6 +49,24 @@ theGame.prototype = {
         ledge.scale.setTo(0.5, 0.5);
         //Arriba:
 
+        ledge = platforms.create(50, 20, 'platformFloorRoof');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.8, 0.8);
+
+        ledge = platforms.create(390, 30, 'platformFloorRoof');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.6, 0.6);
+
+        ledge = platforms.create(640, 20, 'platformFloorRoof');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.8, 0.8);
+/*
         ledge = platforms.create(50, 20, 'platform3');
         ledge.body.immovable = true;
         ledge.charge = -1;
@@ -90,9 +108,28 @@ theGame.prototype = {
         ledge.charge = -1;
         ledge.frame = 0;
         ledge.scale.setTo(0.3, 0.3);
-
+*/
         //Abajo:
 
+        ledge = platforms.create(50, 560, 'platformFloorRoof');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.8, 0.8);
+
+        ledge = platforms.create(390, 560, 'platformFloorRoof');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.6, 0.6);
+
+        ledge = platforms.create(640, 560, 'platformFloorRoof');
+        ledge.body.immovable = true;
+        ledge.charge = -1;
+        ledge.frame = 0;
+        ledge.scale.setTo(0.8, 0.8);
+
+/*
         ledge = platforms.create(830, 560, 'platform2');
         ledge.body.immovable = true;
         ledge.charge = -1;
@@ -134,7 +171,7 @@ theGame.prototype = {
         ledge.charge = -1;
         ledge.frame = 0;
         ledge.scale.setTo(0.3, 0.3);
-
+*/
         //Medio:
             //Verticales centrales:
         ledge = platforms.create(500, 440, 'platform1');
@@ -150,17 +187,7 @@ theGame.prototype = {
         ledge.scale.setTo(0.3, 0.3);
             //Horizontales medios:
 
-        ledge = platforms.create(675, 330, 'platform3');
-        ledge.body.immovable = true;
-        ledge.charge = 1;
-        ledge.frame = 1;
-        ledge.scale.setTo(0.2, 0.2);
-
-        ledge = platforms.create(200, 330, 'platform3');
-        ledge.body.immovable = true;
-        ledge.charge = -1;
-        ledge.frame = 0;
-        ledge.scale.setTo(0.2, 0.2);
+        
 
 
 
@@ -184,7 +211,7 @@ theGame.prototype = {
 
         //  A simple background for our game
         var bg = this.game.add.sprite(0, 0, 'background');
-        bg.scale.setTo(1, 0.7)
+        bg.scale.setTo(2.5, 2.5)
         var tween = this.game.add.tween(bg);
         tween.to({ x: -29000 }, 500000, 'Linear', true, 0);
 
@@ -490,6 +517,13 @@ theGame.prototype = {
             return;
         }
         else {
+
+            var particle = this.game.add.sprite(player.body.x + 30, player.body.y + 30, 'bullet');
+            this.game.physics.arcade.enable(particle);
+            //particle.enableBody = true;
+            particle.body.velocity.x = star.body.velocity.x;
+            particle.body.velocity.y = 1000 * (Math.random() < 0.5 ? -1 : 1);
+
             star.kill();
             this.atom_hit.play();
             player.charge *= -1;
