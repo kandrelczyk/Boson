@@ -321,7 +321,6 @@ theGame.prototype = {
 
 
 
-
         if ((this.pad1.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad1.justPressed(Phaser.Gamepad.XBOX360_B) ||
             this.pad1.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad1.justPressed(Phaser.Gamepad.XBOX360_Y)) &&
             (this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) != 0 || this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) != 0) &&
@@ -348,6 +347,7 @@ theGame.prototype = {
             star.body.gravity.y = 0;
             star.from = "Player 1";
         }
+
 
 
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT) && this.lastShot < (Date.now() - 500)) {
@@ -437,7 +437,7 @@ theGame.prototype = {
 
 
 
-
+        //PLAYER2 CONTROLS KEYBOARD
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.ALT) && this.lastShot2 < (Date.now() - 500)) {
             
 
@@ -563,6 +563,10 @@ theGame.prototype = {
             this.game.physics.arcade.enable(particle);
             //particle.enableBody = true;
             particle.body.velocity.x = star.body.velocity.x;
+            if (star.body.velocity.x = 0)
+            {
+                particle.body.velocity = 500;
+            }
             particle.body.velocity.y = 1000 * (Math.random() < 0.5 ? -1 : 1);
 
             star.kill();
