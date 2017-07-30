@@ -322,9 +322,13 @@ theGame.prototype = {
 
 
 
-        if (this.pad1.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad1.justPressed(Phaser.Gamepad.XBOX360_B) ||
-            this.pad1.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad1.justPressed(Phaser.Gamepad.XBOX360_Y))
+        if ((this.pad1.justPressed(Phaser.Gamepad.XBOX360_A) || this.pad1.justPressed(Phaser.Gamepad.XBOX360_B) ||
+            this.pad1.justPressed(Phaser.Gamepad.XBOX360_X) ||this.pad1.justPressed(Phaser.Gamepad.XBOX360_Y)) &&
+            (this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) != 0 || this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) != 0) &&
+            && this.lastShot < (Date.now() - 500))
         {
+            this.lastShot = Date.now();
+
             var star = stars.create(this.player.body.x + 30, this.player.body.y + 30, 'bullet');
             star.animations.add('wobble', [0,2,4], 10, true);
             star.animations.play("wobble");
